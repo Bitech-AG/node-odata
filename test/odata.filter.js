@@ -26,7 +26,7 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=title eq 'Midnight Rain'`);
+    const res = await request(host).get('/book?$filter=title eq \'Midnight Rain\'');
 
     assertSuccess(res);
 
@@ -42,7 +42,7 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=price lt 5.95`);
+    const res = await request(host).get('/book?$filter=price lt 5.95');
 
     assertSuccess(res);
 
@@ -58,7 +58,7 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=price ge 5.95`);
+    const res = await request(host).get('/book?$filter=price ge 5.95');
 
     assertSuccess(res);
 
@@ -74,7 +74,7 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=price le 5.95`);
+    const res = await request(host).get('/book?$filter=price le 5.95');
 
     assertSuccess(res);
 
@@ -90,7 +90,7 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=   title eq 'Midnight Rain'`);
+    const res = await request(host).get('/book?$filter=   title eq \'Midnight Rain\'');
 
     assertSuccess(res);
   });
@@ -104,7 +104,7 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=title   eq   'Midnight Rain'`);
+    const res = await request(host).get('/book?$filter=title   eq   \'Midnight Rain\'');
 
     assertSuccess(res);
   });
@@ -118,7 +118,7 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=title eq 'Midnight Rain'   `);
+    const res = await request(host).get('/book?$filter=title eq \'Midnight Rain\'   ');
 
     assertSuccess(res);
   });
@@ -132,12 +132,12 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(encodeURI(`/book?$filter=title eq '代码大全'`));
+    const res = await request(host).get(encodeURI('/book?$filter=title eq \'代码大全\''));
 
     assertSuccess(res);
   });
 
-  it(`should work with 'and' and two conditions on same property`, async function () {
+  it('should work with \'and\' and two conditions on same property', async function () {
     server.entity('book', {
       list: (req, res, next) => {
         req.$odata.$filter.should.deepEqual({
@@ -152,13 +152,13 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=price le 5.95 and price ge 4`);
+    const res = await request(host).get('/book?$filter=price le 5.95 and price ge 4');
 
     assertSuccess(res);
 
   });
 
-  it("[and] should filter items when it has extra spaces", async function () {
+  it('[and] should filter items when it has extra spaces', async function () {
     server.entity('book', {
       list: (req, res, next) => {
         req.$odata.$filter.should.deepEqual({
@@ -174,12 +174,12 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=title ne 'Midnight Rain'   and   price ge 36.95`);
+    const res = await request(host).get('/book?$filter=title ne \'Midnight Rain\'   and   price ge 36.95');
 
     assertSuccess(res);
   });
 
-  it(`should work with 'and' and two conditions on different properties`, async function () {
+  it('should work with \'and\' and two conditions on different properties', async function () {
     server.entity('book', {
       list: (req, res, next) => {
         req.$odata.$filter.should.deepEqual({
@@ -199,13 +199,13 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=price le 5.95 and author ne 'Knorr, Stefan'`);
+    const res = await request(host).get('/book?$filter=price le 5.95 and author ne \'Knorr, Stefan\'');
 
     assertSuccess(res);
 
   });
 
-  it(`should work with 'or'`, async function () {
+  it('should work with \'or\'', async function () {
     server.entity('book', {
       list: (req, res, next) => {
         req.$odata.$filter.should.deepEqual({
@@ -225,13 +225,13 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=price le 5.95 or author ne 'Knorr, Stefan'`);
+    const res = await request(host).get('/book?$filter=price le 5.95 or author ne \'Knorr, Stefan\'');
 
     assertSuccess(res);
 
   });
 
-  it(`should work with 'and' and 'or'`, async function () {
+  it('should work with \'and\' and \'or\'', async function () {
     server.entity('book', {
       list: (req, res, next) => {
         req.$odata.$filter.should.deepEqual({
@@ -264,7 +264,7 @@ describe('odata.filter', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book?$filter=price le 5.95 and author ne 'Knorr, Stefan' or price ge 5.95 and author eq 'Knorr, Stefan'`);
+    const res = await request(host).get('/book?$filter=price le 5.95 and author ne \'Knorr, Stefan\' or price ge 5.95 and author eq \'Knorr, Stefan\'');
 
     assertSuccess(res);
 
@@ -283,7 +283,7 @@ describe('odata.filter', () => {
     };
     httpServer = server.listen(port);
 
-    const res = await request(host).get(encodeURI(`/book?$filter=id eq '2'`));
+    const res = await request(host).get(encodeURI('/book?$filter=id eq \'2\''));
 
     assertSuccess(res);
   });

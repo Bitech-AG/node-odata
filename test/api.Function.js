@@ -7,7 +7,11 @@ describe('odata.api.Function', () => {
 
   before(() => {
     const server = odata();
-    server.function('/test', (req, res, next) => res.jsonp({ test: 'ok' }));
+    server.function('/test', (req, res, next) => {
+      res.$odata.result = { test: 'ok' };
+      res.$odata.status = 200;
+      next();
+    });
     httpServer = server.listen(port);
   });
 

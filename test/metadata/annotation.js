@@ -19,15 +19,15 @@ describe('metadata.annotations', () => {
     const jsonDocument = {
       $Version: '4.0',
       readonly: {
-        $Kind: "Term",
-        $Type: "Edm.Boolean",
+        $Kind: 'Term',
+        $Type: 'Edm.Boolean',
         $AppliesTo: [
-          "Property"
+          'Property'
         ],
       },
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24
@@ -42,7 +42,7 @@ describe('metadata.annotations', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       }
     };
@@ -118,7 +118,7 @@ describe('metadata.annotations', () => {
       should.fail(false, true, 'No exception thrown');
 
     } catch (err) {
-      err.message.should.equal(`Annotation with name 'unknown' is not defined`);
+      err.message.should.equal('Annotation with name \'unknown\' is not defined');
     }
   });
 
@@ -126,15 +126,15 @@ describe('metadata.annotations', () => {
     const jsonDocument = {
       $Version: '4.0',
       readonly: {
-        $Kind: "Term",
-        $Type: "Edm.Boolean",
+        $Kind: 'Term',
+        $Type: 'Edm.Boolean',
         $AppliesTo: [
-          "Property"
+          'Property'
         ],
       },
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24
@@ -149,7 +149,7 @@ describe('metadata.annotations', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       },
     };
@@ -180,10 +180,10 @@ describe('metadata.annotations', () => {
     const jsonDocument = {
       $Version: '4.0',
       readonly: {
-        $Kind: "Term",
-        $Type: "Edm.Boolean",
+        $Kind: 'Term',
+        $Type: 'Edm.Boolean',
         $AppliesTo: [
-          "Parameter"
+          'Parameter'
         ],
       },
       'changePassword': {
@@ -210,15 +210,15 @@ describe('metadata.annotations', () => {
     vocabulary.define('readonly', 'boolean', ['Parameter']);
 
     const action = server.action('changePassword',
-      (req, res, next) => { }, {
-      $Parameter: [{
-        $Type: 'Edm.String',
-        $Name: 'newPassword'
-      }, {
-        $Type: 'Edm.String',
-        $Name: 'repeat'
-      }]
-    });
+      () => { }, {
+        $Parameter: [{
+          $Type: 'Edm.String',
+          $Name: 'newPassword'
+        }, {
+          $Type: 'Edm.String',
+          $Name: 'repeat'
+        }]
+      });
 
     action.annotateParameter('newPassword', 'readonly', true);
 
@@ -253,15 +253,15 @@ describe('metadata.annotations', () => {
     vocabulary.define('readonly', 'boolean', ['Parameter']);
 
     const action = server.action('changePassword',
-      (req, res, next) => { }, {
-      $Parameter: [{
-        $Type: 'Edm.String',
-        $Name: 'newPassword'
-      }, {
-        $Type: 'Edm.String',
-        $Name: 'repeat'
-      }]
-    });
+      () => { }, {
+        $Parameter: [{
+          $Type: 'Edm.String',
+          $Name: 'newPassword'
+        }, {
+          $Type: 'Edm.String',
+          $Name: 'repeat'
+        }]
+      });
 
     action.annotateParameter('newPassword', 'readonly', true);
 
@@ -276,9 +276,9 @@ describe('metadata.annotations', () => {
     const jsonDocument = {
       $Version: '4.0',
       fields: {
-        $Kind: "Term",
+        $Kind: 'Term',
         $AppliesTo: [
-          "Action"
+          'Action'
         ],
         $Collection: true
       },
@@ -309,15 +309,15 @@ describe('metadata.annotations', () => {
     }, ['Action']);
 
     const action = server.action('changePassword',
-      (req, res, next) => { }, {
-      $Parameter: [{
-        $Type: 'Edm.String',
-        $Name: 'newPassword'
-      }, {
-        $Type: 'Edm.String',
-        $Name: 'repeat'
-      }]
-    });
+      () => { }, {
+        $Parameter: [{
+          $Type: 'Edm.String',
+          $Name: 'newPassword'
+        }, {
+          $Type: 'Edm.String',
+          $Name: 'repeat'
+        }]
+      });
 
     action.annotate('fields', ['newPassword', 'repeat']);
 
@@ -350,7 +350,7 @@ describe('metadata.annotations', () => {
     </edmx:DataServices>
   </edmx:Edmx>`.replace(/\s*</g, '<').replace(/>\s*/g, '>');
   
-  const vocabulary = server.vocabulary();
+    const vocabulary = server.vocabulary();
 
     vocabulary.define('fields', {
       item: 'parameter',
@@ -358,15 +358,15 @@ describe('metadata.annotations', () => {
     }, ['Action']);
 
     const action = server.action('changePassword',
-      (req, res, next) => { }, {
-      $Parameter: [{
-        $Type: 'Edm.String',
-        $Name: 'newPassword'
-      }, {
-        $Type: 'Edm.String',
-        $Name: 'repeat'
-      }]
-    });
+      () => { }, {
+        $Parameter: [{
+          $Type: 'Edm.String',
+          $Name: 'newPassword'
+        }, {
+          $Type: 'Edm.String',
+          $Name: 'repeat'
+        }]
+      });
 
     action.annotate('fields', ['newPassword', 'repeat']);
 
@@ -381,15 +381,15 @@ describe('metadata.annotations', () => {
     const jsonDocument = {
       $Version: '4.0',
       fields: {
-        $Kind: "Term",
+        $Kind: 'Term',
         $AppliesTo: [
-          "Entity Type"
+          'Entity Type'
         ],
         $Collection: true
       },
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24
@@ -404,7 +404,7 @@ describe('metadata.annotations', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       }
     };

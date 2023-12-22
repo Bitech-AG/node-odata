@@ -1,4 +1,4 @@
-import selectParser from "../parser/selectParser";
+import selectParser from '../parser/selectParser';
 
 export default async (req, res, next) => {
   try {

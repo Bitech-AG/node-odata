@@ -1,9 +1,9 @@
-import MongoEntity from "./Entity";
+import MongoEntity from './Entity';
 import post from './rest/post';
 import put from './rest/put';
 import del from './rest/delete';
-import getSingleton from "./rest/getSingleton";
-import patchSingleton from "./rest/patchSingleton";
+import getSingleton from './rest/getSingleton';
+import patchSingleton from './rest/patchSingleton';
 
 export default class MongoSingleton {
   constructor(name, model, annotations) {

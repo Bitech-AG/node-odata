@@ -1,6 +1,6 @@
 import 'should';
 import request from 'supertest';
-import { odata, host, port, assertSuccess } from './support/setup';
+import { odata, host, port } from './support/setup';
 
 describe('odata.entity', () => {
   let httpServer, server;
@@ -17,14 +17,14 @@ describe('odata.entity', () => {
 
   it('should work with custom implementation', async function () {
     const result = [{
-      "id": '1',
-      "price": 44.95,
-      "title": "XML Developer's Guide"
+      'id': '1',
+      'price': 44.95,
+      'title': 'XML Developer\'s Guide'
     },
     {
-      "id": '1',
-      "price": 5.95,
-      "title": "Midnight Rain"
+      'id': '1',
+      'price': 5.95,
+      'title': 'Midnight Rain'
     }];
     server.entity('book', {
       list: (req, res, next) => {
@@ -50,7 +50,7 @@ describe('odata.entity', () => {
     });
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book`);
+    const res = await request(host).get('/book');
 
     if (!res.ok) {
       res.res.statusMessage.should.be.equal('');
@@ -62,16 +62,6 @@ describe('odata.entity', () => {
   });
 
   it('should return 501 for not implemented methods', async function () {
-    const result = [{
-      "id": '1',
-      "price": 44.95,
-      "title": "XML Developer's Guide"
-    },
-    {
-      "id": '1',
-      "price": 5.95,
-      "title": "Midnight Rain"
-    }];
     server.entity('book', null, {
       $Key: ['id'],
       id: {
@@ -89,7 +79,7 @@ describe('odata.entity', () => {
     });
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book`);
+    const res = await request(host).get('/book');
 
     res.res.statusMessage.should.be.equal('Not Implemented');
 
@@ -100,8 +90,8 @@ describe('odata.entity', () => {
     server.entity('book', {
       get: (req, res, next) => {
         res.$odata.result = {
-          "id": '1',
-          "createdAt": new Date(Date.parse("2019-01-01T00:00:00.000Z"))
+          'id': '1',
+          'createdAt': new Date(Date.parse('2019-01-01T00:00:00.000Z'))
         };
         next();
       }
@@ -117,11 +107,11 @@ describe('odata.entity', () => {
     });
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book('1')`);
+    const res = await request(host).get('/book(\'1\')');
 
     res.body.should.deepEqual({
-      "id": '1',
-      "createdAt": "2019-01-01T00:00:00Z"
+      'id': '1',
+      'createdAt': '2019-01-01T00:00:00Z'
     });
   });
 
@@ -129,7 +119,7 @@ describe('odata.entity', () => {
     server.entity('book', {
       get: (req, res, next) => {
         res.$odata.result = {
-          "id": '1'
+          'id': '1'
         };
         next();
       }
@@ -146,11 +136,11 @@ describe('odata.entity', () => {
     });
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book('1')`);
+    const res = await request(host).get('/book(\'1\')');
 
     res.body.should.deepEqual({
-      "id": '1',
-      "createdAt": null
+      'id': '1',
+      'createdAt': null
     });
   });
 

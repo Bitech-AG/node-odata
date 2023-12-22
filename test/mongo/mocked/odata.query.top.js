@@ -20,7 +20,7 @@ describe('mongo.mocked.odata.query.top', () => {
   before(async function() {
     const server = odata();
     
-    server.mongoEntity('book', BookModel)
+    server.mongoEntity('book', BookModel);
     httpServer = server.listen(port);
   });
 

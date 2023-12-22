@@ -95,14 +95,14 @@ export default class MongoEntity {
 
   visitor(type, node) {
     switch (type) {
-      case 'Property':
-        return this.visitProperty(node);
+    case 'Property':
+      return this.visitProperty(node);
 
-      case 'ComplexType':
-        return this.visitComplexType(node);
+    case 'ComplexType':
+      return this.visitComplexType(node);
 
-      default:
-        return this.visitEntityType(node);
+    default:
+      return this.visitEntityType(node);
     }
   }
 
@@ -122,56 +122,56 @@ export default class MongoEntity {
     }
 
     switch (node.instance) {
-      case 'Boolean':
-        result.$Type = 'Edm.Boolean';
-        break;
+    case 'Boolean':
+      result.$Type = 'Edm.Boolean';
+      break;
 
-      case 'Number':
-        result.$Type = 'Edm.Double';
-        break;
+    case 'Number':
+      result.$Type = 'Edm.Double';
+      break;
 
-      case 'Date':
-        // annotate generated timestamps as readonly
-        const { createdAt, updatedAt } = this.model.schema.$timestamps;
+    case 'Date':
+      // annotate generated timestamps as readonly
+      const { createdAt, updatedAt } = this.model.schema.$timestamps;
 
-        if ((node.path === createdAt || node.path === updatedAt)
+      if ((node.path === createdAt || node.path === updatedAt)
           && this.annotations.isDefined('readonly')) {
-          result = {
-            ...result,
-            ...this.annotations.annotate('readonly', 'Property', true)
-          };
+        result = {
+          ...result,
+          ...this.annotations.annotate('readonly', 'Property', true)
+        };
+      }
+
+      result.$Type = 'Edm.DateTimeOffset';
+      break;
+
+    case 'String':
+      result.$Type = 'Edm.String';
+      if (node.options?.maxLength) {
+        result.$MaxLength = node.options.maxLength;
+      }
+      break;
+
+    case 'Array':
+      result.$Collection = true;
+      if (node.schema && node.schema.paths) {
+        // Array of complex type
+        result.$Type = this.complexType(node);
+      } else {
+        const arrayItemType = this.visitor('Property', {
+          instance: node.options.type[0].name || node.options.type[0].type.name //Enums have an object with enum and type
+        });
+
+        if (!arrayItemType) { // hidden properties returns undefined
+          return;
         }
 
-        result.$Type = 'Edm.DateTimeOffset';
-        break;
+        result.$Type = arrayItemType.$Type;
+      }
+      break;
 
-      case 'String':
-        result.$Type = 'Edm.String';
-        if (node.options?.maxLength) {
-          result.$MaxLength = node.options.maxLength;
-        }
-        break;
-
-      case 'Array':
-        result.$Collection = true;
-        if (node.schema && node.schema.paths) {
-          // Array of complex type
-          result.$Type = this.complexType(node);
-        } else {
-          const arrayItemType = this.visitor('Property', {
-            instance: node.options.type[0].name || node.options.type[0].type.name //Enums have an object with enum and type
-          });
-
-          if (!arrayItemType) { // hidden properties returns undefined
-            return;
-          }
-
-          result.$Type = arrayItemType.$Type;
-        }
-        break;
-
-      default:
-        return null;
+    default:
+      return null;
     }
 
     return result;
@@ -282,7 +282,7 @@ export default class MongoEntity {
     return {
       ...simpleProperties,
       ...deepProperties
-    }
+    };
   }
 
   visitEntityType(node) {

@@ -1,5 +1,5 @@
-import parseProperty from "./property";
-import validateProperty from "../validators/property";
+import parseProperty from './property';
+import validateProperty from '../validators/property';
 
 export default function(req, entity, metadata, mapping) {
   return req.query.$select?.split(',').map((item) => {

@@ -69,7 +69,7 @@ describe('mongo.mocked.client.list', () => {
       .returns(new Promise(resolve => resolve([])));
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/client?$filter=client eq 88&sap-client=099`);
+    const res = await request(host).get('/client?$filter=client eq 88&sap-client=099');
 
     modelMock.verify();
 
@@ -94,7 +94,7 @@ describe('mongo.mocked.client.list', () => {
       .returns(new Promise(resolve => resolve([])));
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/client?sap-client=099`);
+    const res = await request(host).get('/client?sap-client=099');
 
     modelMock.verify();
 

@@ -44,7 +44,7 @@ describe('mongo.mocked.odata.query.filter', function () {
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(`/book?$filter=title eq 'Midnight Rain'`);
+      const res = await request(host).get('/book?$filter=title eq \'Midnight Rain\'');
 
       assertSuccess(res);
       modelMock.verify();
@@ -62,7 +62,7 @@ describe('mongo.mocked.odata.query.filter', function () {
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(`/book?$filter=author eq 'Ralls, Kim'`);
+      const res = await request(host).get('/book?$filter=author eq \'Ralls, Kim\'');
 
       assertSuccess(res);
       modelMock.verify();
@@ -80,7 +80,7 @@ describe('mongo.mocked.odata.query.filter', function () {
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(encodeURI(`/book?$filter=id eq '2'`));
+      const res = await request(host).get(encodeURI('/book?$filter=id eq \'2\''));
 
       assertSuccess(res);
       modelMock.verify();
@@ -91,7 +91,7 @@ describe('mongo.mocked.odata.query.filter', function () {
     });
   });
 
-  describe("[Not equal]", () => {
+  describe('[Not equal]', () => {
     it('should filter items', async function () {
       const books = data.filter(item => item.author != 'Ralls, Kim');
 
@@ -101,7 +101,7 @@ describe('mongo.mocked.odata.query.filter', function () {
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(`/book?$filter=author ne 'Ralls, Kim'`);
+      const res = await request(host).get('/book?$filter=author ne \'Ralls, Kim\'');
 
       assertSuccess(res);
       modelMock.verify();
@@ -112,7 +112,7 @@ describe('mongo.mocked.odata.query.filter', function () {
     });
   });
 
-  describe("[Greater than]", () => {
+  describe('[Greater than]', () => {
     it('should filter items', async function () {
       const books = data.filter(item => item.price > 36.95);
 
@@ -122,7 +122,7 @@ describe('mongo.mocked.odata.query.filter', function () {
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(`/book?$filter=price gt 36.95`);
+      const res = await request(host).get('/book?$filter=price gt 36.95');
 
       assertSuccess(res);
       modelMock.verify();
@@ -143,7 +143,7 @@ describe('mongo.mocked.odata.query.filter', function () {
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(`/book?$filter=price ge 36.95`);
+      const res = await request(host).get('/book?$filter=price ge 36.95');
 
       assertSuccess(res);
       modelMock.verify();
@@ -164,7 +164,7 @@ describe('mongo.mocked.odata.query.filter', function () {
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(`/book?$filter=price lt 36.95`);
+      const res = await request(host).get('/book?$filter=price lt 36.95');
 
       assertSuccess(res);
       modelMock.verify();
@@ -185,7 +185,7 @@ describe('mongo.mocked.odata.query.filter', function () {
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(`/book?$filter=price le 36.95`);
+      const res = await request(host).get('/book?$filter=price le 36.95');
 
       assertSuccess(res);
       modelMock.verify();
@@ -197,22 +197,22 @@ describe('mongo.mocked.odata.query.filter', function () {
   });
 
   describe('[Logical and]', () => {
-    it("should filter items", async function () {
+    it('should filter items', async function () {
       const books = data.filter(item => item.title != 'Midnight Rain' && item.price >= 36.95);
 
       modelMock = sinon.mock(BookModel);
       queryMock = sinon.mock(query);
       modelMock.expects('find').once()
-      .withArgs({
-        $and: [{
-          title: {$ne: 'Midnight Rain'}
-        }, {
-          price: {$gte: 36.95}
-        }]}).returns(query);
+        .withArgs({
+          $and: [{
+            title: {$ne: 'Midnight Rain'}
+          }, {
+            price: {$gte: 36.95}
+          }]}).returns(query);
       queryMock.expects('exec').once()
         .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
-      const res = await request(host).get(`/book?$filter=title ne 'Midnight Rain' and price ge 36.95`);
+      const res = await request(host).get('/book?$filter=title ne \'Midnight Rain\' and price ge 36.95');
 
       assertSuccess(res);
       modelMock.verify();

@@ -1,54 +1,54 @@
 export default class XmlWriter {
   visitor(type, node, name) {
     switch (type) {
-      case 'document':
-        return this.visitDocument(node);
+    case 'document':
+      return this.visitDocument(node);
 
-      case 'EntityType':
-        return this.visitEntityType(node, name);
+    case 'EntityType':
+      return this.visitEntityType(node, name);
 
-      case 'Property':
-        return this.visitProperty(node, name);
+    case 'Property':
+      return this.visitProperty(node, name);
 
-      case 'EntityContainer':
-        return this.visitEntityContainter(node);
+    case 'EntityContainer':
+      return this.visitEntityContainter(node);
 
-      case 'EntitySet':
-        return this.visitEntitySet(node, name);
+    case 'EntitySet':
+      return this.visitEntitySet(node, name);
 
-      case 'Singleton':
-        return this.visitSingleton(node, name);
+    case 'Singleton':
+      return this.visitSingleton(node, name);
 
-      case 'TypeDefinition':
-        return this.visitTypeDefinition(node, name);
+    case 'TypeDefinition':
+      return this.visitTypeDefinition(node, name);
 
-      case 'ComplexType':
-        return this.visitComplexType(node, name);
+    case 'ComplexType':
+      return this.visitComplexType(node, name);
 
-      case 'Action':
-        return this.visitAction(node, name);
+    case 'Action':
+      return this.visitAction(node, name);
 
-      case 'ActionImport':
-        return this.visitActionImport(node, name);
+    case 'ActionImport':
+      return this.visitActionImport(node, name);
 
-      case 'Function':
-        return this.visitFunction(node, name);
+    case 'Function':
+      return this.visitFunction(node, name);
 
-      case 'FunctionImport':
-        return this.visitFunctionImport(node, name);
+    case 'FunctionImport':
+      return this.visitFunctionImport(node, name);
 
-      case 'Term':
-        return this.visitTerm(node, name);
+    case 'Term':
+      return this.visitTerm(node, name);
 
-      default:
-        throw new Error(`Type ${type} is not supported`);
+    default:
+      throw new Error(`Type ${type} is not supported`);
     }
   }
 
   visitTerm(node, name) {
     const appliesTo = node.$AppliesTo.reduce((previos, current) => {
       return previos ? `${previos} ${current}` : current;
-    }, "");
+    }, '');
     let type = node.$Collection ? `Collection(${node.$Type || 'Edm.String'})` : node.$Type;
     
     type = type ? `Type="${type}" ` : '';
@@ -91,7 +91,7 @@ export default class XmlWriter {
     let entitySets = '';
     let singletons = '';
     let functions = '';
-    let actions = ''
+    let actions = '';
 
     Object.keys(node)
       .filter((item) => item !== '$Kind')
@@ -116,7 +116,7 @@ export default class XmlWriter {
     const type = node.$Collection ? `Collection(${node.$Type})` : node.$Type;
     const annotations = Object.keys(node)
       .filter(attribute => attribute[0] === '@')
-      .reduce((previous, current) => `${previous}${this.visitAnnotation(node[current], current)}`, "");
+      .reduce((previous, current) => `${previous}${this.visitAnnotation(node[current], current)}`, '');
     let attributes = '';
 
     if (node.$Nullable) {
@@ -150,7 +150,7 @@ export default class XmlWriter {
     let values;
     
     if (term.$Collection) {
-      values = node.reduce((previous, current) => `${previous}<${type}>${current}</${type}>`, "");
+      values = node.reduce((previous, current) => `${previous}<${type}>${current}</${type}>`, '');
       values = `<Collection>${values}</Collection>`;
     } else {
       values = `<${type}>${node}</${type}>`; 
@@ -172,11 +172,11 @@ export default class XmlWriter {
         properties += this.visitor('Property', node[item], item);
       });
 
-      Object.keys(node)
-        .filter((item) => item[0] === '@')
-        .forEach((item) => {
-          annotations += this.visitAnnotation(node[item], item);
-        });
+    Object.keys(node)
+      .filter((item) => item[0] === '@')
+      .forEach((item) => {
+        annotations += this.visitAnnotation(node[item], item);
+      });
 
     return (
       `<EntityType Name="${name}">
@@ -219,12 +219,12 @@ export default class XmlWriter {
     const isBound = node.$IsBound ? ' IsBound="true"' : '';
     const annotations = Object.keys(node)
       .filter(attribute => attribute[0] === '@')
-      .reduce((previous, current) => `${previous}${this.visitAnnotation(node[current], current)}`, "");
+      .reduce((previous, current) => `${previous}${this.visitAnnotation(node[current], current)}`, '');
     const parameter = node.$Parameter && node.$Parameter
       .map((item) => {
         const parameterAnnotations = Object.keys(item)
           .filter(attribute => attribute[0] === '@')
-          .reduce((previous, current) => `${previous}${this.visitAnnotation(item[current], current)}`, "");
+          .reduce((previous, current) => `${previous}${this.visitAnnotation(item[current], current)}`, '');
         let type = '';
 
         if (item.$Collection) {

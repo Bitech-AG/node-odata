@@ -6,7 +6,7 @@ import { BookMetadata } from './support/books.model';
 
 describe('odata.batch', () => {
   const books = data;
-  let httpServer, resource, sandbox;
+  let httpServer;
 
   afterEach(() => {
     httpServer.close();
@@ -38,17 +38,17 @@ describe('odata.batch', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "get",
-        url: `/book?$filter=contains(title, 'Guide')&$select=title`
+        id: '1',
+        method: 'get',
+        url: '/book?$filter=contains(title, \'Guide\')&$select=title'
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 200,
         statusText: 'OK',
         headers: {
@@ -74,17 +74,17 @@ describe('odata.batch', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "get",
+        id: '1',
+        method: 'get',
         url: `/book('${books[0].id}')`
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 200,
         statusText: 'OK',
         headers: {
@@ -110,17 +110,17 @@ describe('odata.batch', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "get",
+        id: '1',
+        method: 'get',
         url: `/book('${books[0].id}')`
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 200,
         statusText: 'OK',
         headers: {
@@ -134,7 +134,7 @@ describe('odata.batch', () => {
 
   it('should work with post entity', async function () {
     const result = {
-      title: "War and peace",
+      title: 'War and peace',
       createdAt: null,
       updatedAt: null
     };
@@ -144,7 +144,7 @@ describe('odata.batch', () => {
       post: (req, res, next) => {
         req.$odata.body.should.deepEqual(result);
         res.$odata.result = {
-          id: "AFFE",
+          id: 'AFFE',
           ...result
         };
         res.$odata.status = 201;
@@ -153,18 +153,18 @@ describe('odata.batch', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "post",
-        url: `/book`,
+        id: '1',
+        method: 'post',
+        url: '/book',
         body: result
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 201,
         statusText: 'Created',
         headers: {
@@ -172,7 +172,7 @@ describe('odata.batch', () => {
           'content-type': 'application/json'
         },
         body: {
-          id: "AFFE",
+          id: 'AFFE',
           ...result
         }
       }]
@@ -181,8 +181,8 @@ describe('odata.batch', () => {
 
   it('should work with put entity', async function () {
     const result = {
-      id: "1",
-      title: "War and peace"
+      id: '1',
+      title: 'War and peace'
     };
     const server = odata();
 
@@ -196,20 +196,20 @@ describe('odata.batch', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "put",
-        url: `/book('1')`,
+        id: '1',
+        method: 'put',
+        url: '/book(\'1\')',
         body: result
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 200,
-        statusText: "OK",
+        statusText: 'OK',
         headers: {
           'OData-Version': '4.0',
           'content-type': 'application/json'
@@ -222,8 +222,8 @@ describe('odata.batch', () => {
 
   it('should work with patch entity', async function () {
     const result = {
-      id: "1",
-      title: "War and peace"
+      id: '1',
+      title: 'War and peace'
     };
     const server = odata();
 
@@ -237,23 +237,23 @@ describe('odata.batch', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "patch",
-        url: `/book('1')`,
+        id: '1',
+        method: 'patch',
+        url: '/book(\'1\')',
         body: result
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 200,
-        statusText: "OK",
+        statusText: 'OK',
         headers: {
-          "OData-Version": "4.0",
-          "content-type": "application/json"
+          'OData-Version': '4.0',
+          'content-type': 'application/json'
         },
         body: result
       }]
@@ -274,19 +274,19 @@ describe('odata.batch', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "delete",
-        url: `/book('1')`
+        id: '1',
+        method: 'delete',
+        url: '/book(\'1\')'
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 204,
-        statusText: "No Content"
+        statusText: 'No Content'
       }]
     });
   });
@@ -300,22 +300,22 @@ describe('odata.batch', () => {
     });
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "post",
-        url: `/unbound-action`
+        id: '1',
+        method: 'post',
+        url: '/unbound-action'
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 200,
-        statusText: "OK",
+        statusText: 'OK',
         headers: {
-          "OData-Version": "4.0",
-          "content-type": "application/json"
+          'OData-Version': '4.0',
+          'content-type': 'application/json'
         },
         body: {
           result: 'Hello! I am an unbound action.'
@@ -336,22 +336,22 @@ describe('odata.batch', () => {
 
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "post",
+        id: '1',
+        method: 'post',
         url: `/book('${books[0].id}')/entity-action`
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 200,
-        statusText: "OK",
+        statusText: 'OK',
         headers: {
-          "OData-Version": "4.0",
-          "content-type": "application/json"
+          'OData-Version': '4.0',
+          'content-type': 'application/json'
         },
         body: {
           result: 'Hello! I am an action, that bound to entity.'
@@ -381,16 +381,17 @@ describe('odata.batch', () => {
     }, async (req, res, next) => {
       res.$odata.result.should.be.equal(1);
       
-      const promise = new Promise((resolve, reject) => {
+      const promise = new Promise((resolve) => {
         setTimeout(() => {
           resolve(2);
         }, 0);
       });
       res.$odata.result = await promise;
+      next();
     }, async (req, res, next) => {
       res.$odata.result.should.be.equal(2);
       
-      const promise = new Promise((resolve, reject) => {
+      const promise = new Promise((resolve) => {
         setTimeout(() => {
           resolve(3);
         }, 0);
@@ -400,23 +401,23 @@ describe('odata.batch', () => {
     }, (req, res, next) => {
       res.$odata.result.should.be.equal(3);
       next();
-    }])
+    }]);
 
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/$batch`).send({
+    const res = await request(host).post('/$batch').send({
       requests: [{
-        id: "1",
-        method: "delete",
-        url: `/book('1')`
+        id: '1',
+        method: 'delete',
+        url: '/book(\'1\')'
       }]
     });
     assertSuccess(res);
     res.body.should.deepEqual({
       responses: [{
-        id: "1",
+        id: '1',
         status: 204,
-        statusText: "No Content"
+        statusText: 'No Content'
       }]
     });
   });

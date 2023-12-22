@@ -40,10 +40,10 @@ describe('odata.actions', () => {
   it('should work with unbound action', async function () {
     server.action('salam-aleikum', async (req, res) => {
       res.$odata.result = { result: 'Wa aleikum assalam' };
-    })
+    });
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.salam-aleikum`);
+    const res = await request(host).post('/node.odata.salam-aleikum');
 
     if (!res.ok) {
       res.res.statusMessage.should.be.equal('');
@@ -55,10 +55,10 @@ describe('odata.actions', () => {
   it('should return 404 for action url without namespace', async function () {
     server.action('salam-aleikum', async (req, res) => {
       res.$odata.result = { result: 'Wa aleikum assalam' };
-    })
+    });
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/salam-aleikum`);
+    const res = await request(host).post('/salam-aleikum');
 
     res.res.statusMessage.should.be.equal('Not Found');
 
@@ -71,7 +71,7 @@ describe('odata.actions', () => {
       }, {
         unsupportedOption: true
       });
-    }).throw(`Option 'unsupportedOption' is not supported`);
+    }).throw('Option \'unsupportedOption\' is not supported');
 
   });
 
@@ -91,17 +91,17 @@ describe('odata.actions', () => {
     });
     server.action('someThing', async (req, res) => {
       req.$odata.$Parameter.should.have.property('name');
-      req.$odata.$Parameter.name.should.deepEqual(name)
+      req.$odata.$Parameter.name.should.deepEqual(name);
       res.$odata.status = 204;
     }, {
       $Parameter: [{
         $Name: 'name',
         $Type: 'node.odata.fullName'
       }]
-    })
+    });
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.someThing`).send({name});
+    const res = await request(host).post('/node.odata.someThing').send({name});
 
     assertSuccess(res);
     res.status.should.be.equal(204);

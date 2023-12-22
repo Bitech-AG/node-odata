@@ -3,7 +3,7 @@ export const validateIdentifier = (identifier) => {
   if (!identifier || !identifier.match(/^^[_a-zA-Z0-9][_a-zA-Z0-9.-]*$/)) {
     throw new Error(`Invalid simple identifier '${identifier}'`);
   }
-}
+};
 
 
 function shouldContains(property, member, list) {
@@ -29,7 +29,7 @@ function validateType(property, member) {
 
 function validateSRID(name, property) {
   if (!property[name]) {
-    throw new Error(`If SRID is given, then the value had to be supplied`);
+    throw new Error('If SRID is given, then the value had to be supplied');
   }
   if (property[name] !== 'variable') {
     const srid = +(property[name]);
@@ -55,7 +55,7 @@ function shouldBePositive(name, property, member) {
   }
 
   if (+value < 1) {
-    throw new Error(`If '${member}' is given, than the value had to be supplied`)
+    throw new Error(`If '${member}' is given, than the value had to be supplied`);
   }
 
 }
@@ -64,44 +64,43 @@ export const validateProperty = (name, property) => {
   validateIdentifier(name);
 
   const members = Object.keys(property);
-  const allowedMembers = ['$Type', '$Collection', '$Nullable', '$MaxLength',
-    '$Unicode', '$Precision', '$Scale', '$SRID', '$DefaultValue'];
   const boolean = [true, false];
+  let trimmedMember;
 
   members.forEach(member => {
     switch (member.trim()) {
-      case '$Type':
-        validateType(property, member);
-        break;
+    case '$Type':
+      validateType(property, member);
+      break;
 
-      case '$Collection':
-      case '$Nullable':
-      case '$Unicode':
-        shouldContains(property, member.trim(), boolean);
-        break;
+    case '$Collection':
+    case '$Nullable':
+    case '$Unicode':
+      shouldContains(property, member.trim(), boolean);
+      break;
 
-      case '$SRID':
-        validateSRID(name, property);
-        break;
+    case '$SRID':
+      validateSRID(name, property);
+      break;
 
-      case '$MaxLength':
-      case '$Precision':
-      case '$Scale':
-        shouldBePositive(name, property, member);
-        break;
+    case '$MaxLength':
+    case '$Precision':
+    case '$Scale':
+      shouldBePositive(name, property, member);
+      break;
 
-      case '$DefaultValue':
-        break;
+    case '$DefaultValue':
+      break;
 
-      default:
-        const trimmedMember = member.trim();
+    default:
+      trimmedMember = member.trim();
 
-        if (!trimmedMember.match(/^(@\w+(\.\w+)?(#\w+)?)+$/)) { // annotations should be ignored
-          throw new Error(`'${trimmedMember}' ist not allowed as member of property '${name}'`);
-        }
+      if (!trimmedMember.match(/^(@\w+(\.\w+)?(#\w+)?)+$/)) { // annotations should be ignored
+        throw new Error(`'${trimmedMember}' ist not allowed as member of property '${name}'`);
+      }
     }
   });
-}
+};
 
 const validateParameter = parameter => {
   if (!parameter) {
@@ -117,7 +116,7 @@ const validateParameter = parameter => {
   delete clone.$Name;
 
   validateProperty(parameter.$Name, clone);
-}
+};
 
 export const validateParameters = parameter => {
   if (!parameter) {
@@ -129,7 +128,7 @@ export const validateParameters = parameter => {
   }
 
   parameter.forEach(item => validateParameter(item));
-}
+};
 
 function validateComplexType(node) {
   const properties = Object.keys(node);
@@ -138,7 +137,7 @@ function validateComplexType(node) {
     .forEach(name => validateProperty(name, node[name]));
 
   if (!properties.length) {
-    throw new Error('ComplexType without properties is not allowed')
+    throw new Error('ComplexType without properties is not allowed');
   }
 }
 
@@ -146,7 +145,7 @@ function validateEntityType(node) {
   const attributes = Object.keys(node);
 
   if (!node.$Key || !node.$Key.length) {
-    throw new Error('EntityType without key is not allowed')
+    throw new Error('EntityType without key is not allowed');
   }
 
   if (!Array.isArray(node.$Key)) {
@@ -158,12 +157,12 @@ function validateEntityType(node) {
   properties.forEach(name => validateProperty(name, node[name]));
 
   if (!properties.length) {
-    throw new Error('ComplexType without properties is not allowed')
+    throw new Error('ComplexType without properties is not allowed');
   }
 
   node.$Key.forEach(key => {
     if (properties.indexOf(key) === -1) {
-      throw new Error(`EntityType has not a property for $Key with name "${key}"`)
+      throw new Error(`EntityType has not a property for $Key with name "${key}"`);
     }
   });
 }
@@ -174,15 +173,15 @@ export const validate = node => {
   }
 
   switch (node.$Kind) {
-    case 'ComplexType':
-      validateComplexType(node);
-      break;
+  case 'ComplexType':
+    validateComplexType(node);
+    break;
 
-    case 'EntityType':
-      validateEntityType(node);
-      break;
+  case 'EntityType':
+    validateEntityType(node);
+    break;
 
-    default:
-      throw new Error('For validation an object need a property $Kind');
+  default:
+    throw new Error('For validation an object need a property $Kind');
   }
-}
+};

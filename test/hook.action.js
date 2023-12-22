@@ -4,14 +4,6 @@ import request from 'supertest';
 import { odata, host, port } from './support/setup';
 import sinon from 'sinon';
 
-function requestToHalfPrice(id) {
-  return request(host).post(`/book(${id})/50off`);
-}
-
-function halfPrice(price) {
-  return +(price / 2).toFixed(2);
-}
-
 describe('hook.action', () => {
   let httpServer, server;
 
@@ -33,13 +25,13 @@ describe('hook.action', () => {
     });
 
     const callbackHook = sinon.spy();
-    action.addBefore(async (req, res) => {
+    action.addBefore(async (req) => {
       req.hook = 'data drives';
       callbackHook();
     }, 'sample-before');
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.salam-aleikum`);
+    const res = await request(host).post('/node.odata.salam-aleikum');
 
     res.body.should.deepEqual({result: 'data drives'});
 
@@ -54,7 +46,7 @@ describe('hook.action', () => {
       res.$odata.result = {result: 'authority check don`t works'};
     });
 
-    action.addBefore(async (req, res) => {
+    action.addBefore(async () => {
       const error = new Error();
 
       error.status = 401;
@@ -63,7 +55,7 @@ describe('hook.action', () => {
     }, 'sample-bug-hook');
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.salam-aleikum`);
+    const res = await request(host).post('/node.odata.salam-aleikum');
 
     res.res.statusMessage.should.be.equal('Unauthorized');
     callback.should.be.callCount(0);
@@ -77,12 +69,12 @@ describe('hook.action', () => {
     });
 
     const callbackHook = sinon.spy();
-    action.addAfter(async (req, res) => {
+    action.addAfter(async () => {
       callbackHook();
     }, 'sample-after-hook');
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.salam-aleikum`);
+    const res = await request(host).post('/node.odata.salam-aleikum');
 
     res.body.should.deepEqual({result: 'data drives'});
 
@@ -91,26 +83,26 @@ describe('hook.action', () => {
   });
 
   it('should call next callback by using async func', async function () {
-    const action = server.action('salam-aleikum', async (req, res) => {
+    server.action('salam-aleikum', async (req, res) => {
       res.$odata.status = 204;
     });
 
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.salam-aleikum`);
+    const res = await request(host).post('/node.odata.salam-aleikum');
 
     res.res.statusMessage.should.be.equal('No Content');
   });
 
   it('should works with next callback', async function () {
-    const action = server.action('salam-aleikum', async (req, res, next) => {
+    server.action('salam-aleikum', async (req, res, next) => {
       res.$odata.status = 204;
       next();
     });
 
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.salam-aleikum`);
+    const res = await request(host).post('/node.odata.salam-aleikum');
 
     res.res.statusMessage.should.be.equal('No Content');
   });

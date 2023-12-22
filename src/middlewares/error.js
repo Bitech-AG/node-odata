@@ -1,6 +1,7 @@
 import http from 'http';
 import Console from '../writer/Console';
 
+// eslint-disable-next-line no-unused-vars
 export default function(err, req, res, next) {
   const status = err.status || 500;
   const result = {

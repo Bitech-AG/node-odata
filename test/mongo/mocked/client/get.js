@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import { init } from '../../../support/db';
 
 describe('mongo.mocked.client.get', () => {
-  let httpServer, server, modelMock, instanceMock, queryMock, query, Model;
+  let httpServer, server, modelMock, instanceMock, queryMock, Model;
 
   before(() => {
     const Schema = mongoose.Schema;
@@ -19,16 +19,6 @@ describe('mongo.mocked.client.get', () => {
 
     Model = mongoose.model('client', ModelSchema);
 
-    query = {
-      $where: () => { },
-      where: () => { },
-      equals: () => { },
-      gte: () => { },
-      lt: () => { },
-      exec: () => { },
-      count: () => new Promise((resolve) => resolve(1)),
-      model: Model
-    };
   });
 
   beforeEach(async function () {
@@ -63,7 +53,7 @@ describe('mongo.mocked.client.get', () => {
       })));
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/client('1')?sap-client=099`);
+    const res = await request(host).get('/client(\'1\')?sap-client=099');
 
     modelMock.verify();
     assertSuccess(res);
@@ -86,7 +76,7 @@ describe('mongo.mocked.client.get', () => {
       })));
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/client('1')?sap-client=099`);
+    const res = await request(host).get('/client(\'1\')?sap-client=099');
 
     modelMock.verify();
     res.status.should.be.equal(404);

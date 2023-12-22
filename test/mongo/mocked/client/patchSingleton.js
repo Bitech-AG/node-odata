@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import { init } from '../../../support/db';
 
 describe('mongo.mocked.client.patchSingleton', () => {
-  let httpServer, server, modelMock, instanceMock, queryMock, query, Model;
+  let httpServer, server, modelMock, instanceMock, queryMock, Model;
 
   before(() => {
     const Schema = mongoose.Schema;
@@ -20,16 +20,6 @@ describe('mongo.mocked.client.patchSingleton', () => {
 
     Model = mongoose.model('client', ModelSchema);
 
-    query = {
-      $where: () => { },
-      where: () => { },
-      equals: () => { },
-      gte: () => { },
-      lt: () => { },
-      exec: () => { },
-      count: () => new Promise((resolve) => resolve(1)),
-      model: Model
-    };
   });
 
   beforeEach(async function () {
@@ -72,7 +62,7 @@ describe('mongo.mocked.client.patchSingleton', () => {
       });
     httpServer = server.listen(port);
 
-    const res = (await request(host).patch(`/client?sap-client=099`)
+    const res = (await request(host).patch('/client?sap-client=099')
       .send({
         text: 'patched'
       }));
@@ -110,7 +100,7 @@ describe('mongo.mocked.client.patchSingleton', () => {
     modelMock.expects('updateOne').never();
     httpServer = server.listen(port);
 
-    const res = (await request(host).patch(`/client?sap-client=099`)
+    const res = (await request(host).patch('/client?sap-client=099')
       .send({
         client: 98,
         text: 'patched'
@@ -144,16 +134,16 @@ describe('mongo.mocked.client.patchSingleton', () => {
         })
       })));
     modelMock.expects('updateOne').once()
-    .withArgs({
-      _id: '1'
-    }, {
-      _id: '1',
-      client: 99,
-      text: 'patched'
-    }).returns(new Promise(resolve => resolve()));
+      .withArgs({
+        _id: '1'
+      }, {
+        _id: '1',
+        client: 99,
+        text: 'patched'
+      }).returns(new Promise(resolve => resolve()));
     httpServer = server.listen(port);
 
-    const res = (await request(host).patch(`/client?sap-client=099`)
+    const res = (await request(host).patch('/client?sap-client=099')
       .send({
         client: 99,
         text: 'patched'

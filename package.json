@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "node ./examples/index.js",
-    "lint": "eslint src/",
+    "lint": "eslint .",
     "prepublish": "make",
     "test": "make",
     "test:some": "node_modules/.bin/mocha --require @babel/register --reporter dot"

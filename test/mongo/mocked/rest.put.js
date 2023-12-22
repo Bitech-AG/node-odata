@@ -30,7 +30,7 @@ describe('mongo.mocked.rest.put', () => {
     book.title = 'modify book';
     modelMock = sinon.mock(BookModel);
     modelMock.expects('findOne').once().withArgs({_id: '1'})
-      .returns(new Promise((resolve, reject) => resolve(JSON.parse(JSON.stringify({
+      .returns(new Promise(resolve => resolve(JSON.parse(JSON.stringify({
         ...books[0],
         _id: books[0].id
       })))));
@@ -52,11 +52,11 @@ describe('mongo.mocked.rest.put', () => {
     book.title = 'new book';
     modelMock = sinon.mock(BookModel);
     modelMock.expects('findOne').once().withArgs({_id: book.id})
-      .returns(new Promise(resolve => resolve()))
+      .returns(new Promise(resolve => resolve()));
     // mocking save method of created with new instance
     bookInstanceMock = sinon.mock(BookModel.prototype);
     bookInstanceMock.expects('save').once()
-      .returns(new Promise(resolve => resolve()))
+      .returns(new Promise(resolve => resolve()));
 
     const res = await request(host)
       .put(`/book('${book.id}')`)
@@ -68,18 +68,18 @@ describe('mongo.mocked.rest.put', () => {
     modelMock.verify();
   });
   it('should be 404 if without id', async function () {
-    const res = await request(host).put(`/book`).send(books[0]);
+    const res = await request(host).put('/book').send(books[0]);
     res.status.should.be.equal(404);
   });
-  it("should 400 if with a wrong id", async function () {
+  it('should 400 if with a wrong id', async function () {
     const book = JSON.parse(JSON.stringify(books[0]));
 
     book.title = 'new book';
     modelMock = sinon.mock(BookModel);
     modelMock.expects('findOne').once().withArgs({_id: book.id})
-     .returns(new Promise(resolve => resolve()))
+      .returns(new Promise(resolve => resolve()));
 
-    const res = await request(host).put(`/book('1')`).send(books[0]);
+    const res = await request(host).put('/book(\'1\')').send(books[0]);
 
     res.status.should.be.equal(400);
     modelMock.verify();

@@ -22,8 +22,8 @@ describe('metadata.custom.resource', () => {
     const jsonDocument = {
       $Version: '4.0',
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24
@@ -37,12 +37,12 @@ describe('metadata.custom.resource', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       },
     };
     server.entity('book', {}, {
-      $Key: ["id"],
+      $Key: ['id'],
       id: {
         $Type: 'Edm.String',
         $MaxLength: 24

@@ -1,11 +1,11 @@
-import Entity from "./Entity";
-import { validate, validateIdentifier } from "../validator";
-import Hooks from "../Hooks";
+import Entity from './Entity';
+import { validate, validateIdentifier } from '../validator';
+import Hooks from '../Hooks';
 import { Router } from 'express';
 
 export default class Singleton {
   constructor(name, handler, metadata, annotations) {
-    const notSupported = (req, res) => {
+    const notSupported = () => {
       const error = new Error();
 
       error.status = 405;
@@ -65,7 +65,7 @@ export default class Singleton {
   match(method, url) {
     validateIdentifier(this.name);
 
-    const routes = this.getRoutes()
+    const routes = this.getRoutes();
     const route = routes.find((item) => {
       if (item.method === method) {
         const match = url.match(item.regex);
@@ -111,12 +111,12 @@ export default class Singleton {
   ctrl(name, handler) {
     return async (req, res, next) => {
       try {
-      res.$odata.status = 200;
-      await handler(req, res, next);
+        res.$odata.status = 200;
+        await handler(req, res, next);
 
-    } catch(err) { 
-      next(err);
-    }
+      } catch(err) { 
+        next(err);
+      }
     };
   }
 
@@ -125,11 +125,11 @@ export default class Singleton {
     const listRoute = this.entity.getRoutes(name).find(item => item.name === 'list');
 
     return [ 'post', 'put', 'patch', 'delete', 'get'].map(item => ({
-        name: item,
-        method: item,
-        url: listRoute.url,
-        regex: listRoute.regex
-      }));
+      name: item,
+      method: item,
+      url: listRoute.url,
+      regex: listRoute.regex
+    }));
   }
 
 

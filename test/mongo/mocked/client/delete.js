@@ -1,12 +1,12 @@
 import 'should';
 import request from 'supertest';
 import sinon from 'sinon';
-import { odata, host, port, assertSuccess } from '../../../support/setup';
+import { odata, host, port } from '../../../support/setup';
 import mongoose from 'mongoose';
 import { init } from '../../../support/db';
 
 describe('mongo.mocked.client.delete', () => {
-  let httpServer, server, modelMock, instanceMock, queryMock, query, Model;
+  let httpServer, server, modelMock, instanceMock, queryMock, Model;
 
   before(() => {
     const Schema = mongoose.Schema;
@@ -19,16 +19,6 @@ describe('mongo.mocked.client.delete', () => {
 
     Model = mongoose.model('client', ModelSchema);
 
-    query = {
-      $where: () => { },
-      where: () => { },
-      equals: () => { },
-      gte: () => { },
-      lt: () => { },
-      exec: () => { },
-      count: () => new Promise((resolve) => resolve(1)),
-      model: Model
-    };
   });
 
   beforeEach(async function () {
@@ -62,7 +52,7 @@ describe('mongo.mocked.client.delete', () => {
       })));
     httpServer = server.listen(port);
 
-    const res = await request(host).delete(`/client('1')?sap-client=099`);
+    const res = await request(host).delete('/client(\'1\')?sap-client=099');
 
     modelMock.verify();
     res.status.should.be.equal(404);
@@ -87,7 +77,7 @@ describe('mongo.mocked.client.delete', () => {
     instanceMock.expects('deleteOne').once();
     httpServer = server.listen(port);
 
-    const res = await request(host).delete(`/client('1')?sap-client=099`);
+    const res = await request(host).delete('/client(\'1\')?sap-client=099');
 
     modelMock.verify();
     instanceMock.verify();

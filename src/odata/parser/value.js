@@ -1,4 +1,4 @@
-function parseBoolean(value, metadata) {
+function parseBoolean(value) {
   if (value === 'true') {
     return true;
   }
@@ -13,7 +13,7 @@ function parseBoolean(value, metadata) {
   throw err;
 }
 
-function parseNumber(value, metadata) {
+function parseNumber(value) {
   const result = +value;
 
   if (Number.isNaN(value)) {
@@ -26,7 +26,7 @@ function parseNumber(value, metadata) {
   return result;
 }
 
-function parseDate(value, metadata) {
+function parseDate(value) {
   const result = new Date(value);
 
   if (Number.isNaN(result.valueOf())) {
@@ -45,28 +45,27 @@ export default function (value, metadata) {
   }
 
   switch (metadata.$Type) {
-    case 'Edm.Boolean':
-      return parseBoolean(trimmed, metadata);
+  case 'Edm.Boolean':
+    return parseBoolean(trimmed, metadata);
 
-    case 'Edm.Byte':
-    case 'Edm.Decimal':
-    case 'Edm.Double':
-    case 'Edm.Duration':
-    case 'Edm.Int16':
-    case 'Edm.Int32':
-    case 'Edm.Int64':
-    case 'Edm.SByte':
-    case 'Edm.Single':
-      return parseNumber(trimmed, metadata);
+  case 'Edm.Byte':
+  case 'Edm.Decimal':
+  case 'Edm.Double':
+  case 'Edm.Int16':
+  case 'Edm.Int32':
+  case 'Edm.Int64':
+  case 'Edm.SByte':
+  case 'Edm.Single':
+    return parseNumber(trimmed, metadata);
 
-    case 'Edm.Date':
-    case 'Edm.DateTimeOffset':
-    case 'Edm.Duration':
-    case 'Edm.TimeOfDay':
-      return parseDate(trimmed, metadata);
+  case 'Edm.Date':
+  case 'Edm.DateTimeOffset':
+  case 'Edm.Duration':
+  case 'Edm.TimeOfDay':
+    return parseDate(trimmed, metadata);
 
-    default:
-      return trimmed;
+  default:
+    return trimmed;
   }
 
 }

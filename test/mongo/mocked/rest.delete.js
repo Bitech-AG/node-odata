@@ -9,7 +9,7 @@ describe('mongo.mocked.rest.delete', function() {
 
   before(async function() {
     const server = odata();
-    server.mongoEntity('book', BookModel)
+    server.mongoEntity('book', BookModel);
     httpServer = server.listen(port);
   });
 
@@ -26,7 +26,7 @@ describe('mongo.mocked.rest.delete', function() {
     modelMock.expects('deleteOne').once().withArgs({_id: '1'})
       .returns(new Promise(resolve => resolve(JSON.stringify({n:1}))));
 
-    const res = await request(host).del(`/book('1')`);
+    const res = await request(host).del('/book(\'1\')');
 
     assertSuccess(res);
     res.status.should.be.equal(204);
@@ -37,13 +37,13 @@ describe('mongo.mocked.rest.delete', function() {
     modelMock.expects('deleteOne').once().withArgs({_id: '666'})
       .returns(new Promise(resolve => resolve(JSON.stringify({n:0}))));
 
-    const res = await request(host).del(`/book('666')`);
+    const res = await request(host).del('/book(\'666\')');
 
     res.status.should.be.equal(404);
     modelMock.verify();
   });
   it('should be 404 if without id', async function() {
-    const res = await request(host).del(`/book`);
+    const res = await request(host).del('/book');
 
     res.status.should.be.equal(404);
   });

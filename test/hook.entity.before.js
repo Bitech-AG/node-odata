@@ -14,7 +14,7 @@ describe('hook.entity.before', function() {
     server.entity('book', {
       get: (req, res, next) => {
         res.$odata.result = {
-          title: "Test hook"
+          title: 'Test hook'
         };
         res.$odata.status = 200;
         next();
@@ -36,7 +36,7 @@ describe('hook.entity.before', function() {
       next();
     });
     httpServer = server.listen(port);
-    const res = await request(host).get(`/book('AFFE')`);
+    const res = await request(host).get('/book(\'AFFE\')');
     assertSuccess(res);
     callback.should.be.called();
   });
@@ -49,7 +49,7 @@ describe('hook.entity.before', function() {
     server.resources.book.addBefore(hook);
     server.resources.book.addBefore(hook);
     httpServer = server.listen(port);
-    await request(host).get(`/book('AFFE')`);
+    await request(host).get('/book(\'AFFE\')');
     callback.should.be.calledTwice();
   });
 });

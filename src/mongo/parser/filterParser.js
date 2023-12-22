@@ -28,35 +28,35 @@ function parse($filter) {
   const keys = Object.keys($filter);
 
   keys.forEach(name => {
-      if ($filter[name].$function) {
-        const func = {
-          ...functions[$filter[name].$function.$name](name, $filter[name].$function) 
-        };
+    if ($filter[name].$function) {
+      const func = {
+        ...functions[$filter[name].$function.$name](name, $filter[name].$function) 
+      };
         
-        $filter[name] = func;
-      }
+      $filter[name] = func;
+    }
 
-      // parsing rekursion
-      if(Array.isArray($filter[name])) {
-          $filter[name].forEach(subCondition => parse(subCondition));
-      }
+    // parsing rekursion
+    if(Array.isArray($filter[name])) {
+      $filter[name].forEach(subCondition => parse(subCondition));
+    }
 
-      if ($filter[name].eq === null) {
-        $filter[name].$exists = false;
-        delete $filter[name].eq;
-      }
+    if ($filter[name].eq === null) {
+      $filter[name].$exists = false;
+      delete $filter[name].eq;
+    }
 
-      if ($filter[name].ne === null) {
-        $filter[name].$exists = true;
-        delete $filter[name].ne;
+    if ($filter[name].ne === null) {
+      $filter[name].$exists = true;
+      delete $filter[name].ne;
 
-      }
+    }
 
   });
 
   return $filter;
 
-};
+}
 
 export default ($filter, $odata) => {
   let result = parse($filter);
@@ -64,7 +64,7 @@ export default ($filter, $odata) => {
   if ($odata.clientField) {
     const clientCondition = { [$odata.clientField]: { $eq: $odata.client } };
 
-    result = result ? { $and: [ clientCondition, result ] } : clientCondition
+    result = result ? { $and: [ clientCondition, result ] } : clientCondition;
   }
 
   return result;

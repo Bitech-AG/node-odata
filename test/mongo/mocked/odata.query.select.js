@@ -187,7 +187,7 @@ describe('mongo.mocked.odata.query.select', () => {
     modelMock.expects('find').returns(userQuery);
     queryMock.expects('select').once().withArgs({
       _id: 0,
-      "name.first": 1
+      'name.first': 1
     });
     queryMock.expects('exec').once()
       .returns(new Promise(resolve => resolve(result.map(item => ({ toObject: () => item })))));

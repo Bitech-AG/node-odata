@@ -15,10 +15,6 @@ import multipartMixed from './parser/multipartMixed';
 import Singleton from './odata/entity/Singleton';
 import Vocabulary from './odata/Vocabulary';
 
-function checkAuth(auth, req) {
-  return !auth || auth(req);
-}
-
 class Server {
   constructor(prefix, options) {
     const opts = (options && options.expressRequestLimit)
@@ -55,7 +51,7 @@ class Server {
         status: 404,
         supportedMimetypes: ['application/json'],
         messages: []
-      }
+      };
     }, 'service-initialization');
     this.hooks.addAfter(writer, 'writer', true);
 
@@ -185,7 +181,7 @@ class Server {
     singletonEntity.mapping = {
       ...singletonEntity.mapping,
       ...entity.mapping
-    }
+    };
     return singletonEntity;
   }
 
@@ -251,29 +247,29 @@ class Server {
 
   set(key, val) {
     switch (key) {
-      case 'prefix': {
-        let prefix = val;
-        if (prefix === '/') {
-          prefix = '';
-        }
-        if (prefix.length > 0 && prefix[0] !== '/') {
-          prefix = `/${prefix}`;
-        }
-        this._settings[key] = prefix;
-        break;
+    case 'prefix': {
+      let prefix = val;
+      if (prefix === '/') {
+        prefix = '';
       }
-      default: {
-        this._settings[key] = val;
-        if (this.resources) {
-          Object.keys(this.resources)
-            .forEach(name => {
-              if (this.resources[name].set) {
-                this.resources[name].set(key, val);
-              }
-            });
-        }
-        break;
+      if (prefix.length > 0 && prefix[0] !== '/') {
+        prefix = `/${prefix}`;
       }
+      this._settings[key] = prefix;
+      break;
+    }
+    default: {
+      this._settings[key] = val;
+      if (this.resources) {
+        Object.keys(this.resources)
+          .forEach(name => {
+            if (this.resources[name].set) {
+              this.resources[name].set(key, val);
+            }
+          });
+      }
+      break;
+    }
     }
     return this;
   }

@@ -5,7 +5,7 @@ REPORTER = dot
 run: lint compile test
 
 lint:
-	node_modules/.bin/eslint src/
+	node_modules/.bin/eslint src/ --fix
 
 compile:
 	node_modules/.bin/babel src --out-dir lib

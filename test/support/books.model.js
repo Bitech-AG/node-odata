@@ -10,15 +10,15 @@ export const BookSchema = new Schema({
   publish_date: Date,
   title: String
 },
-  {
-    timestamps: true,
-    toObject: {
-      virtuals: true,
-    },
-    toJSON: {
-      virtuals: true,
-    },
-  });
+{
+  timestamps: true,
+  toObject: {
+    virtuals: true,
+  },
+  toJSON: {
+    virtuals: true,
+  },
+});
 
 export const BookModel = mongoose.model('Book', BookSchema);
 

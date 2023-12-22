@@ -9,24 +9,24 @@ export default class MultipartWriter {
         const headers = Object.keys(response.headers);
 
         headers.forEach(header => {
-          body += `${header}: ${response.headers[header]}\r\n`
+          body += `${header}: ${response.headers[header]}\r\n`;
         });
       }
       body += '\r\n';
 
       let textBody;
       switch (typeof response.body) {
-        case 'string':
-          textBody = response.body;
-          break;
+      case 'string':
+        textBody = response.body;
+        break;
 
-        case 'undefined': // http status 204
-          textBody = '{}';
-          break;
+      case 'undefined': // http status 204
+        textBody = '{}';
+        break;
 
-        default:
-          textBody = JSON.stringify(response.body);
-          break;
+      default:
+        textBody = JSON.stringify(response.body);
+        break;
       }
 
       body += `${textBody}\r\n`;

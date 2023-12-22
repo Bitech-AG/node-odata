@@ -58,7 +58,7 @@ describe('mongo.mocked.client.count', () => {
       }).returns(query);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/client/$count?sap-client=099`);
+    const res = await request(host).get('/client/$count?sap-client=099');
 
     modelMock.verify();
     assertSuccess(res);

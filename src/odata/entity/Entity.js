@@ -1,14 +1,14 @@
-import { validateIdentifier, validate } from "../validator";
+import { validateIdentifier, validate } from '../validator';
 import { Router } from 'express';
-import Hooks from "../Hooks";
+import Hooks from '../Hooks';
 import Action from '../Action';
 import parseSelect from './parser/select';
 import parseKeys from './parser/keys';
 import parseCount from './parser/count';
 import parseFilter from './parser/filter';
-import parseOrderBy from "./parser/orderby";
+import parseOrderBy from './parser/orderby';
 import parseClient from './parser/client';
-import { parseSkip, parseTop } from "./parser/skiptop";
+import { parseSkip, parseTop } from './parser/skiptop';
 
 export default class Entity {
 
@@ -40,7 +40,7 @@ export default class Entity {
   }
 
   constructor(name, handler, metadata, settings, annotations) {
-    const notImplemented = op => (req, res) => {
+    const notImplemented = op => () => {
       const error = new Error(`Operation '${op}' is not implemented'`);
 
       error.status = 501;
@@ -99,7 +99,7 @@ export default class Entity {
       .map(name => this.actions[name].match(method, url))
       .find(ctrl => ctrl);
     if (action) {
-      return action
+      return action;
     }
 
     const routes = this.getRoutes();
@@ -134,13 +134,6 @@ export default class Entity {
   }
 
   get(key) {
-    if (value) {
-      if (Number.isNaN(+value) || +value < 0) {
-        throw new Error(`Max-Skip value should be a positive number`);
-      }
-      this.options.maxSkip = value;
-    }
-
     return this.options[key];
   }
 
@@ -152,11 +145,11 @@ export default class Entity {
     };
 
     switch (key) {
-      case 'maxSkip':
-      case 'maxTop':
-        positiveOnly(value);
-        this.options[key] = value;
-        break;
+    case 'maxSkip':
+    case 'maxTop':
+      positiveOnly(value);
+      this.options[key] = value;
+      break;
     }
 
   }
@@ -191,7 +184,7 @@ export default class Entity {
     const result = {
       propertyMetadata: null,
       mapping: null
-    }
+    };
 
     if (entityMetadata[member]) {
       result.propertyMetadata = entityMetadata[member];
@@ -234,9 +227,9 @@ export default class Entity {
         return;
       }
 
-      if (propertyMetadata.$Type === "Edm.DateTimeOffset"
+      if (propertyMetadata.$Type === 'Edm.DateTimeOffset'
         && Object.prototype.toString.call(entity[member]) === '[object Date]') {
-        entity[member] = entity[member].toISOString().replace(/\.[0-9]{3}/, '')
+        entity[member] = entity[member].toISOString().replace(/\.[0-9]{3}/, '');
       }
 
     });
@@ -255,7 +248,7 @@ export default class Entity {
       if (propertyMetadata.$Nullable && entity[member] === undefined) {
         entity[member] = null;
       }
-    })
+    });
   }
 
   getRouter() {
@@ -381,16 +374,16 @@ export default class Entity {
 
   getKeyParam(type, name) {
     switch (type) {
-      case 'Edm.String':
-        return `%27:${name}%27`;
+    case 'Edm.String':
+      return `%27:${name}%27`;
 
-      default:
-        return `:${name}`;
+    default:
+      return `:${name}`;
     }
   }
 
   getResourceUrl(name) {
-        const entityName = name || this.name;
+    const entityName = name || this.name;
     const resourceListURL = `/${entityName}`;
 
     if (this.metadata.$Key.length === 1) {
@@ -425,7 +418,7 @@ export default class Entity {
         regex: resourceListRegex
       },
       {
-                name: 'put',
+        name: 'put',
         method: 'put',
         url: resourceURL,
         regex: resourceRegex

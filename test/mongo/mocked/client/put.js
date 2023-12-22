@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import { init } from '../../../support/db';
 
 describe('mongo.mocked.client.put', () => {
-  let httpServer, server, modelMock, instanceMock, queryMock, query, Model;
+  let httpServer, server, modelMock, instanceMock, queryMock, Model;
 
   before(() => {
     const Schema = mongoose.Schema;
@@ -16,20 +16,8 @@ describe('mongo.mocked.client.put', () => {
     });
     
     mongoose.set('overwriteModels', true);
-
-
     Model = mongoose.model('client', ModelSchema);
 
-    query = {
-      $where: () => { },
-      where: () => { },
-      equals: () => { },
-      gte: () => { },
-      lt: () => { },
-      exec: () => { },
-      count: () => new Promise((resolve) => resolve(1)),
-      model: Model
-    };
   });
 
   beforeEach(async function () {
@@ -62,20 +50,20 @@ describe('mongo.mocked.client.put', () => {
         client: 99,
         toObject: () => (
           {
-          _id: '1',
-          client: 99,
-          text: 'original'
-        })
+            _id: '1',
+            client: 99,
+            text: 'original'
+          })
       })));
     modelMock.expects('findByIdAndUpdate').once()
-    .withArgs('1', {
-      _id: '1',
-      client: 99,
-      text: 'patched'
-    }).returns(new Promise(resolve => resolve()));
+      .withArgs('1', {
+        _id: '1',
+        client: 99,
+        text: 'patched'
+      }).returns(new Promise(resolve => resolve()));
     httpServer = server.listen(port);
 
-    const res = (await request(host).put(`/client('1')?sap-client=099`)
+    const res = (await request(host).put('/client(\'1\')?sap-client=099')
       .send({
         _id: '1',
         client: 99,
@@ -108,15 +96,15 @@ describe('mongo.mocked.client.put', () => {
         client: 99,
         toObject: () => (
           {
-          _id: '1',
-          client: 99,
-          text: 'original'
-        })
+            _id: '1',
+            client: 99,
+            text: 'original'
+          })
       })));
     modelMock.expects('findByIdAndUpdate').never();
     httpServer = server.listen(port);
 
-    const res = (await request(host).put(`/client('1')?sap-client=099`)
+    const res = (await request(host).put('/client(\'1\')?sap-client=099')
       .send({
         _id: '1',
         client: 98,
@@ -148,15 +136,15 @@ describe('mongo.mocked.client.put', () => {
         client: 99,
         toObject: () => (
           {
-          _id: '1',
-          client: 99,
-          text: 'original'
-        })
+            _id: '1',
+            client: 99,
+            text: 'original'
+          })
       })));
     modelMock.expects('findByIdAndUpdate').never();
     httpServer = server.listen(port);
 
-    const res = (await request(host).put(`/client('1')?sap-client=098`)
+    const res = (await request(host).put('/client(\'1\')?sap-client=098')
       .send({
         _id: '1',
         client: 98,
@@ -195,7 +183,7 @@ describe('mongo.mocked.client.put', () => {
       }).returns(new Promise(resolve => resolve()));
     httpServer = server.listen(port);
 
-    const res = (await request(host).put(`/client('1')?sap-client=099`)
+    const res = (await request(host).put('/client(\'1\')?sap-client=099')
       .send({
         _id: '1',
         text: 'patched'

@@ -35,8 +35,8 @@ describe('metadata.function', () => {
       () => {},
       { 
         $ReturnType: {
-        $Type: 'Edm.String'
-      }});
+          $Type: 'Edm.String'
+        }});
     httpServer = server.listen(port);
     const res = await request(host).get('/$metadata?$format=json');
     assertSuccess(res);
@@ -58,7 +58,7 @@ describe('metadata.function', () => {
       </edmx:DataServices>
     </edmx:Edmx>`.replace(/\s*</g, '<').replace(/>\s*/g, '>');
     server.function('odata-function', 
-      (req, res, next) => {},
+      () => {},
       { $ReturnType: {
         $Type: 'Edm.String'
       }});

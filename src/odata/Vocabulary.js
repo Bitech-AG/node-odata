@@ -7,12 +7,13 @@ export default class Vocabulary {
 
   getMetadata() {
     const result = {};
-    const names = Object.keys(this.terms)
+    
+    Object.keys(this.terms)
       .forEach(name => {
         result[name] = {
           $Kind: 'Term',
           ...this.terms[name]
-        }
+        };
       });
 
     return result;
@@ -78,7 +79,7 @@ export default class Vocabulary {
     }
 
     if (!destination) {
-      throw new Error(`Parameter 'destination' should be given`);
+      throw new Error('Parameter \'destination\' should be given');
     }
 
     if (anno.$AppliesTo.indexOf(destination) === -1) {
@@ -91,7 +92,7 @@ export default class Vocabulary {
 
     return {
       [`@${name}`]: value
-    }
+    };
   }
 
   getTypeOf(value) {
@@ -106,17 +107,17 @@ export default class Vocabulary {
     }
 
     switch (prototype) {
-      case 'number':
-        return 'Edm.Double';
+    case 'number':
+      return 'Edm.Double';
 
-      case 'string':
-        return undefined; //Edm.String is default
+    case 'string':
+      return undefined; //Edm.String is default
 
-      case 'boolean':
-        return 'Edm.Boolean';
+    case 'boolean':
+      return 'Edm.Boolean';
 
-      default:
-        throw Error(`Type '${prototype}' is not supported`);
+    default:
+      throw Error(`Type '${prototype}' is not supported`);
     }
   }
 }

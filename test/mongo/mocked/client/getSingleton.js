@@ -1,7 +1,7 @@
 import 'should';
 import request from 'supertest';
 import sinon from 'sinon';
-import { odata, host, port, assertSuccess } from '../../../support/setup';
+import { odata, host, port } from '../../../support/setup';
 import mongoose from 'mongoose';
 import { init } from '../../../support/db';
 
@@ -66,7 +66,7 @@ describe('mongo.mocked.client.getSingleton', () => {
       .returns({});
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/client?sap-client=099`);
+    const res = await request(host).get('/client?sap-client=099');
 
     modelMock.verify();
     queryMock.verify();
@@ -99,7 +99,7 @@ describe('mongo.mocked.client.getSingleton', () => {
       })));
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/client?sap-client=099`);
+    const res = await request(host).get('/client?sap-client=099');
 
     modelMock.verify();
     queryMock.verify();

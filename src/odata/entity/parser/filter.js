@@ -58,22 +58,20 @@ export default function (req, entity, metadata, mapping) {
         properties.find(name => item[name]));
       const sameProperty = properties.find(name => oldCondition && oldCondition[name]);
       
-        if (oldCondition) {
-          oldCondition[sameProperty] = {
-            ...oldCondition[sameProperty],
-            ...newCondition[sameProperty]
-          };
-        } else {
-          result.push(newCondition);
-        }
+      if (oldCondition) {
+        oldCondition[sameProperty] = {
+          ...oldCondition[sameProperty],
+          ...newCondition[sameProperty]
+        };
+      } else {
+        result.push(newCondition);
+      }
     });
 
     return result.length > 1 ? { $and: result } : result[0];
   };
 
   const splitCondition = (filter, dictionary) => {
-    const operatorIndex = filter.search(/\s+(eq|ne|gt|ge|lt|le)\s+/i);
-
     if (filter.match(funcRegex)) {
       return visitor('parseFunction', filter, dictionary);
     }
@@ -90,23 +88,23 @@ export default function (req, entity, metadata, mapping) {
     const operatorPrettified = operands[1].trim().toLowerCase();
 
     switch (operatorPrettified) {
-      case 'eq':
-      case 'ne':
-      case 'gt':
-      case 'lt':
-        operator = `$${operatorPrettified}`;
-        break;
+    case 'eq':
+    case 'ne':
+    case 'gt':
+    case 'lt':
+      operator = `$${operatorPrettified}`;
+      break;
 
-      case 'ge':
-        operator = '$gte';
-        break;
+    case 'ge':
+      operator = '$gte';
+      break;
 
-      case 'le':
-        operator = '$lte';
-        break;
+    case 'le':
+      operator = '$lte';
+      break;
 
-      default:
-        throw new Error(`Unexpected operator '${operatorPrettified}' in '${$filter}'`);
+    default:
+      throw new Error(`Unexpected operator '${operatorPrettified}' in '${filter}'`);
     }
 
     const property = parseProperty(operands[0], mapping);
@@ -168,23 +166,23 @@ export default function (req, entity, metadata, mapping) {
     }
 
     switch (step) {
-      case 'parseFunction':
-        return parseFunction(filter, dictionary);
+    case 'parseFunction':
+      return parseFunction(filter, dictionary);
 
-      case 'replaceStrings':
-        return replaceString(filter, []);
+    case 'replaceStrings':
+      return replaceString(filter, []);
 
-      case 'splitAnd':
-        return splitAnd(filter, dictionary);
+    case 'splitAnd':
+      return splitAnd(filter, dictionary);
 
-      case 'splitCondition':
-        return splitCondition(filter, dictionary);
+    case 'splitCondition':
+      return splitCondition(filter, dictionary);
 
-      case 'splitOr':
-        return splitOr(filter, dictionary);
+    case 'splitOr':
+      return splitOr(filter, dictionary);
 
-      default:
-        throw new Error(`Step '${step}' not implemented`);
+    default:
+      throw new Error(`Step '${step}' not implemented`);
     }
   };
 

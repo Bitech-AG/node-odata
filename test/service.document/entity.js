@@ -5,7 +5,7 @@ import { BookMetadata } from '../support/books.model';
 import checkContentType from '../support/checkContentType';
 
 describe('service.document.entity', () => {
-  let httpServer, server, db;
+  let httpServer, server;
 
   const jsonDocument = {
     '@context': 'http://localhost:3000/$metadata',

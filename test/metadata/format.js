@@ -6,7 +6,7 @@ describe('metadata.format', () => {
   let httpServer, server;
 
   const metadata = {
-    $Key: ["id"],
+    $Key: ['id'],
     id: {
       $Type: 'Edm.String',
       $MaxLength: 24
@@ -33,7 +33,7 @@ describe('metadata.format', () => {
   const jsonDocument = {
     $Version: '4.0',
     book: {
-      $Kind: "EntityType",
+      $Kind: 'EntityType',
       ...metadata
     },
     $EntityContainer: 'node.odata',
@@ -41,7 +41,7 @@ describe('metadata.format', () => {
       $Kind: 'EntityContainer',
       book: {
         $Collection: true,
-        $Type: `node.odata.book`,
+        $Type: 'node.odata.book',
       }
     },
   };

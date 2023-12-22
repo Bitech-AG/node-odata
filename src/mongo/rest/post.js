@@ -1,4 +1,4 @@
-import applyClient from "../applyClient";
+import applyClient from '../applyClient';
 
 export default async (req, res, next) => {
   try {

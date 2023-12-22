@@ -53,7 +53,7 @@ describe('mongo.mocked.odata.query.count', function () {
     queryMock = sinon.mock(query);
     modelMock.expects('find').twice().returns(query);
     queryMock.expects('exec').once()
-    .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
+      .returns(new Promise(resolve => resolve(books.map(item => ({ toObject: () => item })))));
 
     const res = await request(host).get('/book?$count=false');
     res.body.should.be.not.have.property('@odata.count');

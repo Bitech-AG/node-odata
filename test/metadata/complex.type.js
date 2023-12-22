@@ -3,7 +3,7 @@ import request from 'supertest';
 import { host, port, odata, assertSuccess } from '../support/setup';
 
 describe('metadata.complex.type', () => {
-  let httpServer, server, db;
+  let httpServer, server;
 
   beforeEach(async function() {
     server = odata();
@@ -18,9 +18,9 @@ describe('metadata.complex.type', () => {
     const jsonDocument = {
       $Version: '4.0',      
       fullName: {
-        $Kind: "ComplexType",
+        $Kind: 'ComplexType',
         first: {
-          $Type: "Edm.String"
+          $Type: 'Edm.String'
         },
         last: {
           $Type: 'Edm.String'

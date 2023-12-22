@@ -1,26 +1,26 @@
 const convertToOperator = (odataOperator) => {
   let operator;
   switch (odataOperator) {
-    case 'eq':
-      operator = '==';
-      break;
-    case 'ne':
-      operator = '!=';
-      break;
-    case 'gt':
-      operator = '>';
-      break;
-    case 'ge':
-      operator = '>=';
-      break;
-    case 'lt':
-      operator = '<';
-      break;
-    case 'le':
-      operator = '<=';
-      break;
-    default:
-      throw new Error('Invalid operator code, expected one of ["==", "!=", ">", ">=", "<", "<="].');
+  case 'eq':
+    operator = '==';
+    break;
+  case 'ne':
+    operator = '!=';
+    break;
+  case 'gt':
+    operator = '>';
+    break;
+  case 'ge':
+    operator = '>=';
+    break;
+  case 'lt':
+    operator = '<';
+    break;
+  case 'le':
+    operator = '<=';
+    break;
+  default:
+    throw new Error('Invalid operator code, expected one of ["==", "!=", ">", ">=", "<", "<="].');
   }
   return operator;
 };
@@ -49,34 +49,32 @@ const year = (name, $filter) => {
   const end = new Date(+$value + 1, 0, 1);
 
   switch ($operator) {
-    case 'eq':
-      result.$gte = start;
-      result.$lt = end;
-      break;
-    case 'ne': {
-      result = {
-        $or: [{
-          $lt: start
-        }, {
-          $gte: end
-        }]
-      } ;
-      break;
-    }
-    case 'gt':
-      result.$gte = end;
-      break;
-    case 'ge':
-      result.$gte = start;
-      break;
-    case 'lt':
-      result.$lt = start;
-      break;
-    case 'le':
-      result.$lt = end;
-      break;
-    default:
-      throw new Error('Invalid operator code, expected one of ["==", "!=", ">", ">=", "<", "<="].');
+  case 'eq':
+    result.$gte = start;
+    result.$lt = end;
+    break;
+  case 'ne': {
+    result.$or[{
+      $lt: start
+    }, {
+      $gte: end
+    }];
+    break;
+  }
+  case 'gt':
+    result.$gte = end;
+    break;
+  case 'ge':
+    result.$gte = start;
+    break;
+  case 'lt':
+    result.$lt = start;
+    break;
+  case 'le':
+    result.$lt = end;
+    break;
+  default:
+    throw new Error('Invalid operator code, expected one of ["==", "!=", ">", ">=", "<", "<="].');
   }
 
   return result;

@@ -22,8 +22,8 @@ describe('rest.post', () => {
 
   it('should create new resource', async function() {
     const res = await request(host)
-    .post(`/book`)
-    .send({ title: 'rest.post.js' });    
+      .post('/book')
+      .send({ title: 'rest.post.js' });    
     if (!res.ok) {
       res.text.should.equal('');
     }
@@ -31,7 +31,7 @@ describe('rest.post', () => {
     res.body.should.be.have.property('title');
   });
   it('should be 422 if post without data', async function() {
-    const res = await request(host).post(`/book`);
+    const res = await request(host).post('/book');
     res.status.should.be.equal(422);
   });
 });

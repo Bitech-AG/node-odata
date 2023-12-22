@@ -15,7 +15,7 @@ bookModel.deleteMany({}).then(function() {
     const parseditem = JSON.parse(JSON.stringify(item));
 
     delete parseditem.id;
-    entity = new bookModel(parseditem);
+    const entity = new bookModel(parseditem);
     entity.save();
   });
 });

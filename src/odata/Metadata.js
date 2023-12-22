@@ -30,7 +30,7 @@ export default class Metadata {
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   _router() {
     /*eslint-disable */
@@ -48,7 +48,7 @@ export default class Metadata {
     };
   }
 
-  visitor(type, node, model) {
+  visitor(type, node) {
     return Metadata.visitFunction(node);
   }
 
@@ -141,7 +141,7 @@ export default class Metadata {
       };
 
       return result;
-    }, {})
+    }, {});
     const unboundActions = actionNames.reduce((previousAction, currentAction) => {
       const result = { ...previousAction };
       const action = this._server.actions[currentAction];
@@ -149,7 +149,7 @@ export default class Metadata {
       result[currentAction] = action.getMetadata();
 
       return result;
-    }, {})
+    }, {});
 
     const document = {
       $Version: '4.0',

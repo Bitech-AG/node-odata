@@ -18,9 +18,9 @@ describe('singleton', () => {
 
   it('should work with get', async function () {
     const result = {
-      "id": '1',
-      "price": 44.95,
-      "title": "XML Developer's Guide"
+      'id': '1',
+      'price': 44.95,
+      'title': 'XML Developer\'s Guide'
     };
     server.singleton('book', {
       get: (req, res, next) => {
@@ -30,7 +30,7 @@ describe('singleton', () => {
     }, BookMetadata);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/book`);
+    const res = await request(host).get('/book');
 
     if (!res.ok) {
       res.res.statusMessage.should.be.equal('');
@@ -41,9 +41,9 @@ describe('singleton', () => {
 
   it('should work if entityset and singleton defined', async function () {
     const result = {
-      "id": '1',
-      "price": 44.95,
-      "title": "XML Developer's Guide"
+      'id': '1',
+      'price': 44.95,
+      'title': 'XML Developer\'s Guide'
     };
     const book = server.entity('book', null, BookMetadata);
     server.singletonFrom('current-book', {
@@ -54,7 +54,7 @@ describe('singleton', () => {
     }, book);
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/current-book`);
+    const res = await request(host).get('/current-book');
 
     if (!res.ok) {
       res.res.statusMessage.should.be.equal('');

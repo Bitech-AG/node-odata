@@ -26,7 +26,7 @@ describe('odata.select', () => {
     });
     server.entity('user', {
       list: (req, res, next) => {
-        req.$odata.$select.should.deepEqual(['name.first'])
+        req.$odata.$select.should.deepEqual(['name.first']);
         res.$odata.status = 204;
         next();
       }
@@ -43,7 +43,7 @@ describe('odata.select', () => {
     });
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/user?$select=name/first`);
+    const res = await request(host).get('/user?$select=name/first');
 
     assertSuccess(res);
   });

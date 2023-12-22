@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import { init } from '../../../support/db';
 
 describe('mongo.mocked.client.post', () => {
-  let httpServer, server, modelMock, instanceMock, queryMock, query, Model;
+  let httpServer, server, modelMock, instanceMock, queryMock, Model;
 
   before(() => {
     const Schema = mongoose.Schema;
@@ -20,16 +20,6 @@ describe('mongo.mocked.client.post', () => {
 
     Model = mongoose.model('client', ModelSchema);
 
-    query = {
-      $where: () => { },
-      where: () => { },
-      equals: () => { },
-      gte: () => { },
-      lt: () => { },
-      exec: () => { },
-      count: () => new Promise((resolve) => resolve(1)),
-      model: Model
-    };
   });
 
   beforeEach(async function () {
@@ -56,7 +46,7 @@ describe('mongo.mocked.client.post', () => {
     instanceMock.expects('save').never();
     httpServer = server.listen(port);
 
-    const res = (await request(host).post(`/client?sap-client=099`)
+    const res = (await request(host).post('/client?sap-client=099')
       .send({
         client: 98,
         text: 'patched'
@@ -88,10 +78,10 @@ describe('mongo.mocked.client.post', () => {
         _id: '1',
         client: 99,
         text: 'original'
-      })
+      });
     httpServer = server.listen(port);
 
-    const res = (await request(host).post(`/client?sap-client=099`)
+    const res = (await request(host).post('/client?sap-client=099')
       .send({
         client: 99,
         text: 'original'

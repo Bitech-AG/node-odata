@@ -10,7 +10,7 @@ describe('mongo.metadata.resource.complex', () => {
 
   before(() => {
     mongoose.set('overwriteModels', true);
-  })
+  });
 
   beforeEach(async function () {
     server = odata();
@@ -23,7 +23,7 @@ describe('mongo.metadata.resource.complex', () => {
   it('should return json metadata for nested document array', async function () {
     const jsonDocument = {
       $Version: '4.0',
-      "complex-modelp1Child1": {
+      'complex-modelp1Child1': {
         $Kind: 'ComplexType',
         id: {
           $Type: 'Edm.String',
@@ -36,8 +36,8 @@ describe('mongo.metadata.resource.complex', () => {
         }
       },
       'complex-model': {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -54,7 +54,7 @@ describe('mongo.metadata.resource.complex', () => {
         $Kind: 'EntityContainer',
         'complex-model': {
           $Collection: true,
-          $Type: `node.odata.complex-model`,
+          $Type: 'node.odata.complex-model',
         }
       },
     };
@@ -112,8 +112,8 @@ describe('mongo.metadata.resource.complex', () => {
     const jsonDocument = {
       $Version: '4.0',
       'complex-model': {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -130,7 +130,7 @@ describe('mongo.metadata.resource.complex', () => {
         $Kind: 'EntityContainer',
         'complex-model': {
           $Collection: true,
-          $Type: `node.odata.complex-model`,
+          $Type: 'node.odata.complex-model',
         }
       },
     };
@@ -214,7 +214,7 @@ describe('mongo.metadata.resource.complex', () => {
   it('should return json metadata for nested document in document', async function () {
     const jsonDocument = {
       $Version: '4.0',
-      "complex-modelp4Child1": {
+      'complex-modelp4Child1': {
         $Kind: 'ComplexType',
         p5: {
           $Type: 'Edm.String',
@@ -222,8 +222,8 @@ describe('mongo.metadata.resource.complex', () => {
         }
       },
       'complex-model': {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -238,7 +238,7 @@ describe('mongo.metadata.resource.complex', () => {
         $Kind: 'EntityContainer',
         'complex-model': {
           $Collection: true,
-          $Type: `node.odata.complex-model`,
+          $Type: 'node.odata.complex-model',
         }
       },
     };
@@ -295,13 +295,13 @@ describe('mongo.metadata.resource.complex', () => {
     const jsonDocument = {
       $Version: '4.0',
       p1p2Child1: {
-        $Kind: "ComplexType",
+        $Kind: 'ComplexType',
         p3: {
           $Type: 'Edm.String',
           $Nullable: true
         },
         p4: {
-          $Type: "node.odata.p1p4Child2"
+          $Type: 'node.odata.p1p4Child2'
         },
         id: {
           $Type: 'Edm.String',
@@ -310,15 +310,15 @@ describe('mongo.metadata.resource.complex', () => {
         }
       },
       p1p4Child2: {
-        $Kind: "ComplexType",
+        $Kind: 'ComplexType',
         p5: {
           $Type: 'Edm.String',
           $Nullable: true
         }
       },
       p1: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -335,7 +335,7 @@ describe('mongo.metadata.resource.complex', () => {
         $Kind: 'EntityContainer',
         p1: {
           $Collection: true,
-          $Type: `node.odata.p1`,
+          $Type: 'node.odata.p1',
         }
       },
     };
@@ -403,7 +403,7 @@ describe('mongo.metadata.resource.complex', () => {
     const jsonDocument = {
       $Version: '4.0',
       myComlexType: {
-        $Kind: "ComplexType",
+        $Kind: 'ComplexType',
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -414,8 +414,8 @@ describe('mongo.metadata.resource.complex', () => {
         }
       },
       p1: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -430,7 +430,7 @@ describe('mongo.metadata.resource.complex', () => {
         $Kind: 'EntityContainer',
         p1: {
           $Collection: true,
-          $Type: `node.odata.p1`,
+          $Type: 'node.odata.p1',
         }
       },
     };
@@ -462,7 +462,7 @@ describe('mongo.metadata.resource.complex', () => {
         }
       }
     };
-    entity.update
+    entity.update;
     httpServer = server.listen(port);
 
     const res = await request(host).get('/$metadata?$format=json');

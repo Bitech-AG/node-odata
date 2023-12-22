@@ -6,7 +6,7 @@ export default class Hooks {
 
   addBefore(fn, name) {
     if (!fn) {
-      throw new Error(`Parameter 'fn' should be given`);
+      throw new Error('Parameter \'fn\' should be given');
     }
 
     if (Array.isArray(fn)) {
@@ -54,7 +54,7 @@ export default class Hooks {
 
   addAfter(fn, name, isFinal) {
     if (!fn) {
-      throw new Error(`Parameter 'fn' should be given`);
+      throw new Error('Parameter \'fn\' should be given');
     }
 
     if (Array.isArray(fn)) {

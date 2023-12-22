@@ -11,7 +11,7 @@ describe('mongo.error', () => {
 
   before(() => {
     mongoose.set('overwriteModels', true);
-  })
+  });
 
   beforeEach(async function() {
     server = odata();
@@ -26,9 +26,9 @@ describe('mongo.error', () => {
   it('should return 400 for mongo validation errors', async function() {
     const result = {
       error: {
-        code: "400",
-        message: "Path `password` (`ggm`) is shorter than the minimum allowed length (8).",
-        target: "password"
+        code: '400',
+        message: 'Path `password` (`ggm`) is shorter than the minimum allowed length (8).',
+        target: 'password'
       }
     };
     const UserSchema = new Schema({
@@ -48,7 +48,7 @@ describe('mongo.error', () => {
     httpServer = server.listen(port);
 
     const res = await request(host)
-      .post(`/User`)
+      .post('/User')
       .send({ password: 'ggm' });    
 
     res.body.should.deepEqual(result);

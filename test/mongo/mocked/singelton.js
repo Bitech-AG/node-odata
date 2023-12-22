@@ -14,15 +14,15 @@ const ConfigSchema = new Schema({
     default: true
   },
 },
-  {
-    timestamps: true,
-    toObject: {
-      virtuals: true,
-    },
-    toJSON: {
-      virtuals: true,
-    },
-  });
+{
+  timestamps: true,
+  toObject: {
+    virtuals: true,
+  },
+  toJSON: {
+    virtuals: true,
+  },
+});
 
 const ConfigModel = mongoose.model('Config', ConfigSchema);
 
@@ -150,15 +150,6 @@ describe('mongo.mocked.singleton', () => {
 
   it('should supports upsert', async function () {
     const now = new Date();
-    const query = {
-      $where: () => { },
-      where: () => { },
-      equals: () => { },
-      select: () => { },
-      sort: () => { },
-      exec: () => { },
-      model: ConfigModel
-    };
 
     modelMock = sinon.mock(ConfigModel);
     modelMock.expects('findOne').once().returns(new Promise((resolve) => resolve()));

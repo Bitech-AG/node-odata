@@ -19,14 +19,14 @@ describe('metadata.singleton', () => {
     const jsonDocument = {
       $Version: '4.0',
       book: {
-        $Kind: "EntityType",
+        $Kind: 'EntityType',
         ...BookMetadata
       },
       $EntityContainer: 'node.odata',
       ['node.odata']: {
         $Kind: 'EntityContainer',
         book: {
-          $Type: `node.odata.book`
+          $Type: 'node.odata.book'
         }
       },
     };
@@ -75,7 +75,7 @@ describe('metadata.singleton', () => {
     const jsonDocument = {
       $Version: '4.0',
       book: {
-        $Kind: "EntityType",
+        $Kind: 'EntityType',
         ...BookMetadata
       },
       $EntityContainer: 'node.odata',
@@ -83,10 +83,10 @@ describe('metadata.singleton', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`
+          $Type: 'node.odata.book'
         },
-        "current-book": {
-          $Type: `node.odata.book`
+        'current-book': {
+          $Type: 'node.odata.book'
         }
       },
     };

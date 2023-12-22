@@ -16,7 +16,7 @@ function multipart(req, res, next) {
       .map(singleRequestText => {
         const result = {};
 
-        if (singleRequestText.indexOf("Group ID: ") >= 0) {
+        if (singleRequestText.indexOf('Group ID: ') >= 0) {
           return; //sap extension, not documentet in odata
         }
         const matchMethodUrl = singleRequestText.match(/^(GET|POST|PUT|PATCH|DELETE)\s+([\w\/\.,$?=\-()']+)\s*/m);

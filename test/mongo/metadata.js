@@ -11,7 +11,7 @@ describe('mongo.metadata', () => {
 
   before(() => {
     mongoose.set('overwriteModels', true);
-  })
+  });
 
   beforeEach(async function() {
     server = odata();
@@ -26,8 +26,8 @@ describe('mongo.metadata', () => {
     const jsonDocument = {
       $Version: '4.0',
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -46,7 +46,7 @@ describe('mongo.metadata', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       },
     };
@@ -129,8 +129,8 @@ describe('mongo.metadata', () => {
     const jsonDocument = {
       $Version: '4.0',
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -147,7 +147,7 @@ describe('mongo.metadata', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       },
     };
@@ -205,8 +205,8 @@ describe('mongo.metadata', () => {
     const jsonDocument = {
       $Version: '4.0',
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -214,7 +214,7 @@ describe('mongo.metadata', () => {
         },
         author: {
           $Type: 'Edm.String',
-          $DefaultValue: "William Shakespeare",
+          $DefaultValue: 'William Shakespeare',
           $Nullable: true
         }
       },
@@ -223,7 +223,7 @@ describe('mongo.metadata', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       },
     };
@@ -281,8 +281,8 @@ describe('mongo.metadata', () => {
     const jsonDocument = {
       $Version: '4.0',
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24,
@@ -298,7 +298,7 @@ describe('mongo.metadata', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       },
     };

@@ -8,19 +8,19 @@ const Schema = mongoose.Schema;
 
 function addResource() {
   return request(host)
-  .post('/complex-model')
-  .send({ p1: [{ p2: 'origin' }] });
+    .post('/complex-model')
+    .send({ p1: [{ p2: 'origin' }] });
 }
 
 function updateResouce(id) {
   return request(host)
-  .put(`/complex-model('${id}')`)
-  .send({ p1: [{ p2: 'new' }] });
+    .put(`/complex-model('${id}')`)
+    .send({ p1: [{ p2: 'new' }] });
 }
 
 function queryResource(id) {
   return request(host)
-  .get(`/complex-model('${id}')`);
+    .get(`/complex-model('${id}')`);
 }
 
 describe('mongo.connected.model.complex', () => {
@@ -44,7 +44,7 @@ describe('mongo.connected.model.complex', () => {
   it('should work when PUT a complex entity', async function() {
     const entity = await addResource();
     entity.body.should.have.property('id');
-    assertSuccess(entity)
+    assertSuccess(entity);
     let res = await updateResouce(entity.body.id);
     assertSuccess(res);
     res = await queryResource(entity.body.id);

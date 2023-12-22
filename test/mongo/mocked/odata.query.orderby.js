@@ -123,7 +123,7 @@ describe('mongo.mocked.odata.query.orderby', () => {
     });
   });
 
-  it("should fail by not exist field", async function() {
+  it('should fail by not exist field', async function() {
     modelMock = sinon.mock(BookModel);
     modelMock.expects('find').never();
 

@@ -57,7 +57,7 @@ describe('mongo.mocked.rest.get', () => {
     modelMock.expects('find').once().returns(bookQuery);
     queryMock.expects('exec').once().returns(new Promise(resolve => resolve([])));
 
-    const res = await request(host).get(`/book`);
+    const res = await request(host).get('/book');
 
     res.body.should.be.have.property('value');
     res.body.value.length.should.be.equal(0);
@@ -69,14 +69,14 @@ describe('mongo.mocked.rest.get', () => {
     modelMock.expects('findById').once().withArgs('1')
       .returns(new Promise(resolve => resolve({toObject: () => ({title: 'Krieg und Frieden'})})));
 
-    const res = await request(host).get(`/book('1')`);
+    const res = await request(host).get('/book(\'1\')');
     
     res.body.should.be.have.property('title');
     res.body.title.should.be.equal('Krieg und Frieden');
     modelMock.verify();
   });
   it('should be 404 if resouce name not declare', async function() {
-    const res = await request(host).get(`/not-exist-resource`);
+    const res = await request(host).get('/not-exist-resource');
     res.status.should.be.equal(404);
   });
   it('should be 404 if resource not exist', async function() {
@@ -85,7 +85,7 @@ describe('mongo.mocked.rest.get', () => {
     modelMock.expects('findById').once().withArgs('1')
       .returns(new Promise(resolve => resolve()));
 
-    const res = await request(host).get(`/book('1')`);
+    const res = await request(host).get('/book(\'1\')');
     res.status.should.be.equal(404);
     modelMock.verify();
   });
@@ -94,7 +94,7 @@ describe('mongo.mocked.rest.get', () => {
     modelMock.expects('findById').once().withArgs('1')
       .returns(new Promise(resolve => resolve({toObject: () => ({p1:{p2: 'Krieg und Frieden'}})})));
 
-    const res = await request(host).get(`/complex-type('1')`);
+    const res = await request(host).get('/complex-type(\'1\')');
     res.body.should.be.have.property('p1');
     res.body.p1.should.be.have.property('p2');
     res.body.p1.p2.should.be.equal('Krieg und Frieden');

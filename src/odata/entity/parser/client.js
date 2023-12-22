@@ -11,4 +11,4 @@ module.exports = function parseClient(req, name, metadata, target) {
     throw err;
 
   }
-}
+};

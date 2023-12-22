@@ -1,5 +1,4 @@
 import 'should';
-import sinon from 'sinon';
 import request from 'supertest';
 import { odata, host, port, assertSuccess } from './support/setup';
 import { BookMetadata } from './support/books.model';
@@ -65,7 +64,7 @@ describe('options.maxTop', () => {
     assertSuccess(res);
   });
   it('should use query-limit if it is minimum global-limit', async function() {
-    const entity = server.entity('book', {
+    server.entity('book', {
       list: (req, res, next) => {
         res.$odata.result = [];
         res.$odata.status = 200;

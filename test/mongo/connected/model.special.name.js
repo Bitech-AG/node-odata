@@ -26,8 +26,8 @@ describe('model.special.name', () => {
 
   it('should work when use odata function keyword', async function() {
     const res = await request(host)
-    .post('/function-keyword')
-    .send({ year: 2015 });
+      .post('/function-keyword')
+      .send({ year: 2015 });
     assertSuccess(res);
     res.status.should.be.equal(201);
   });

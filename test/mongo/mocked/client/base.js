@@ -1,12 +1,12 @@
 import 'should';
 import request from 'supertest';
 import sinon from 'sinon';
-import { odata, host, port, assertSuccess } from '../../../support/setup';
+import { odata, host, port } from '../../../support/setup';
 import mongoose from 'mongoose';
 import { init } from '../../../support/db';
 
 describe('mongo.mocked.client.base', () => {
-  let httpServer, server, modelMock, instanceMock, queryMock, query, Model;
+  let httpServer, server, modelMock, instanceMock, queryMock, Model;
 
   before(() => {
     const Schema = mongoose.Schema;
@@ -15,20 +15,8 @@ describe('mongo.mocked.client.base', () => {
     });
     
     mongoose.set('overwriteModels', true);
-
-
     Model = mongoose.model('client', ModelSchema);
 
-    query = {
-      $where: () => { },
-      where: () => { },
-      equals: () => { },
-      gte: () => { },
-      lt: () => { },
-      exec: () => { },
-      count: () => new Promise((resolve) => resolve(1)),
-      model: Model
-    };
   });
 
   beforeEach(async function () {
@@ -55,13 +43,13 @@ describe('mongo.mocked.client.base', () => {
     modelMock.expects('findById').never();
     httpServer = server.listen(port);
 
-    const res = await request(host).get(`/client('1')`);
+    const res = await request(host).get('/client(\'1\')');
 
     modelMock.verify();
     res.body.should.deepEqual({
       error: {
         code: '400',
-        message: `For entity 'client' you must send a client value`
+        message: 'For entity \'client\' you must send a client value'
       }
     });
 

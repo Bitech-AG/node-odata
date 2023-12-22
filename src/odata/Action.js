@@ -24,7 +24,7 @@ export default class Action {
       } catch (error) {
         next(error);
       }
-    }
+    };
     this.hooks = new Hooks();
 
     if (options) {
@@ -165,28 +165,28 @@ export default class Action {
     let path;
 
     switch (this.binding) {
-      case 'entity':
-        if (!this.resource) {
-          throw new Error(`Binding '${this.binding}' require a resource`)
+    case 'entity':
+      if (!this.resource) {
+        throw new Error(`Binding '${this.binding}' require a resource`);
+      }
+      path = asRegex ? new RegExp(`\/?${this.resource.name}\\('?[A-Fa-f0-9]*'?\\)\/${this.name}$`) : `${this.resource.getNavigation().url}/${this.name}`;
+      break;
+    case 'collection':
+      if (!this.resource) {
+        throw new Error(`Binding '${this.binding}' require a resource`);
+      }
+      path = asRegex ? new RegExp(`\/?${this.resource.name}\/${this.name}$`) : `/${this.resource.name}/${this.name}`;
+      break;
+    default:
+      if (this.binding) {
+        throw new Error(`Invalid binding '${this.binding}'`);
+      } else {
+        if (this.resource) {
+          throw new Error(`Use of the unbound action '${this.name}' by a resource '${this.resource.name}' is not intended`);
         }
-        path = asRegex ? new RegExp(`\/?${this.resource.name}\\('?[A-Fa-f0-9]*'?\\)\/${this.name}$`) : `${this.resource.getNavigation().url}/${this.name}`;
-        break;
-      case 'collection':
-        if (!this.resource) {
-          throw new Error(`Binding '${this.binding}' require a resource`)
-        }
-        path = asRegex ? new RegExp(`\/?${this.resource.name}\/${this.name}$`) : `/${this.resource.name}/${this.name}`;
-        break;
-      default:
-        if (this.binding) {
-          throw new Error(`Invalid binding '${this.binding}'`);
-        } else {
-          if (this.resource) {
-            throw new Error(`Use of the unbound action '${this.name}' by a resource '${this.resource.name}' is not intended`)
-          }
-          path = asRegex ? new RegExp(`(node\.odata)?\/?${this.name}$`) : `/node.odata.${this.name}`;
-        }
-        break;
+        path = asRegex ? new RegExp(`(node\.odata)?\/?${this.name}$`) : `/node.odata.${this.name}`;
+      }
+      break;
     }
     return path;
   }

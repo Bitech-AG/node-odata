@@ -49,7 +49,7 @@ describe('mongo.mocked.model.custom.id', () => {
   afterEach(() => {
     modelMock.restore();
     queryMock?.restore();
-  })
+  });
 
   it('should work when use a custom id to query specific entity', async function () {
     modelMock = sinon.mock(Model);

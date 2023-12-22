@@ -8,7 +8,7 @@ export default class MimetypeParser {
   }
 
   getmMediaType(format, accept, supportedFormats, requrestContentType) {
-     if (format) {
+    if (format) {
       // get requested media type from $format query
       return this._getMediaType(format, supportedFormats);
     } else if (accept) {

@@ -29,8 +29,8 @@ describe('metadata.action', () => {
         }]
       },
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24
@@ -44,7 +44,7 @@ describe('metadata.action', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       },
     };
@@ -58,7 +58,7 @@ describe('metadata.action', () => {
         $Type: 'Edm.String'
       } 
     }).action('bound-action', 
-      (req, res, next) => {},
+      () => {},
       { binding: 'entity' });
     httpServer = server.listen(port);
     const res = await request(host).get('/$metadata?$format=json');
@@ -97,7 +97,7 @@ describe('metadata.action', () => {
         $Type: 'Edm.String'
       } 
     }).action('bound-action', 
-      (req, res, next) => {},
+      () => {},
       { binding: 'entity' });
     httpServer = server.listen(port);
     const res = await request(host).get('/$metadata').set('accept', 'application/xml');
@@ -118,8 +118,8 @@ describe('metadata.action', () => {
         }]
       },
       book: {
-        $Kind: "EntityType",
-        $Key: ["id"],
+        $Kind: 'EntityType',
+        $Key: ['id'],
         id: {
           $Type: 'Edm.String',
           $MaxLength: 24
@@ -133,7 +133,7 @@ describe('metadata.action', () => {
         $Kind: 'EntityContainer',
         book: {
           $Collection: true,
-          $Type: `node.odata.book`,
+          $Type: 'node.odata.book',
         }
       },
     };
@@ -147,7 +147,7 @@ describe('metadata.action', () => {
         $Type: 'Edm.String'
       } 
     }).action('bound-action', 
-      (req, res, next) => {},
+      () => {},
       { binding: 'collection' });
     httpServer = server.listen(port);
     const res = await request(host).get('/$metadata?$format=json');
@@ -186,7 +186,7 @@ describe('metadata.action', () => {
         $Type: 'Edm.String'
       } 
     }).action('bound-action', 
-      (req, res, next) => {},
+      () => {},
       { binding: 'collection' });
     httpServer = server.listen(port);
     const res = await request(host).get('/$metadata').set('accept', 'application/xml');
@@ -196,14 +196,14 @@ describe('metadata.action', () => {
 
   it('should not accept action names with special characters', function() {
     try {
-      const action = server.action('/login', (req, res, next) => {});
+      const action = server.action('/login', () => {});
 
       action.getRouter();
 
       throw new Error('Invalid name should not accepted');
       
     } catch(error) {
-      error.message.should.equal(`Invalid simple identifier '/login'`);
+      error.message.should.equal('Invalid simple identifier \'/login\'');
     }
   });
 
@@ -226,7 +226,7 @@ describe('metadata.action', () => {
       }
     };
     server.action('unbound-action', 
-      (req, res, next) => {}, { 
+      () => {}, { 
         $Parameter: [{
           $Name: 'book',
           $Type: 'node.odata.book'
@@ -252,7 +252,7 @@ describe('metadata.action', () => {
       </edmx:DataServices>
     </edmx:Edmx>`.replace(/\s*</g, '<').replace(/>\s*/g, '>');
     server.action('unbound-action', 
-      (req, res, next) => {});
+      () => {});
     httpServer = server.listen(port);
     const res = await request(host).get('/$metadata').set('accept', 'application/xml');
     assertSuccess(res);

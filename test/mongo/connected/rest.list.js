@@ -6,7 +6,7 @@ import { connect } from '../../support/db';
 import { BookModel } from '../../support/books.model';
 
 describe('mongo.connected.rest.list', () => {
-  let httpServer
+  let httpServer;
   
   before(() => {
     const server = odata();

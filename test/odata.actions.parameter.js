@@ -2,7 +2,7 @@ import 'should';
 import request from 'supertest';
 import { odata, host, port } from './support/setup';
 
-describe('odata.actions', () => {
+describe('odata.actions.parameter', () => {
   let httpServer, server;
 
   beforeEach(async function () {
@@ -37,7 +37,7 @@ describe('odata.actions', () => {
     });
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.change-password`).send(parameter);
+    const res = await request(host).post('/node.odata.change-password').send(parameter);
     res.statusCode.should.equal(204);
   });
 
@@ -56,14 +56,14 @@ describe('odata.actions', () => {
     });
     httpServer = server.listen(port);
 
-    const res = await request(host).post(`/node.odata.change-password`).send({
+    const res = await request(host).post('/node.odata.change-password').send({
       newPassword: 'Not all parameters given'
     });
     res.statusCode.should.equal(400);
     res.body.should.deepEqual({
       error: {
         code: '400',
-        message: `Obligatory parameter 'repeat' not given`
+        message: 'Obligatory parameter \'repeat\' not given'
       }
     });
   });

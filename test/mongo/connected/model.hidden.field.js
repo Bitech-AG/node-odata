@@ -39,7 +39,7 @@ describe('mongo.connected.model.hidden.field', function () {
     res.should.have.property('error');
     res.error.should.not.be.equal(false);
     res.body.error.code.should.be.equal('400');
-    res.body.error.message.should.be.equal(`Entity 'hidden-field' has no property named 'password'`);
+    res.body.error.message.should.be.equal('Entity \'hidden-field\' has no property named \'password\'');
 
   });
 

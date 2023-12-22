@@ -1,5 +1,5 @@
-import parseProperty from "./property";
-import validateProperty from "../validators/property";
+import parseProperty from './property';
+import validateProperty from '../validators/property';
 
 export default function parseOrderBy(req, entity, metadata, mapping, options) {
   const orderby = options || req.query.$orderby;
@@ -17,7 +17,7 @@ export default function parseOrderBy(req, entity, metadata, mapping, options) {
 
       validateProperty(operands[1], req, entity, metadata);
       
-      return [property, operands[2]?.trim().toLowerCase() || 'asc']
+      return [property, operands[2]?.trim().toLowerCase() || 'asc'];
     })];
   }
 }

@@ -152,7 +152,7 @@ export default class Batch {
     }
   }
 
-  async ctrl(req, res, next) {
+  async ctrl(req, res) {
     const responses = req.body.requests.map(async function (request) {
       const handler = Object.keys(this._server.resources)
         .map((name) => this._server.resources[name].match(request.method, request.url))
@@ -197,7 +197,7 @@ export default class Batch {
         function jsonp(body) {
           result.body = body;
           appendHeader('content-type', 'application/json');
-        };
+        }
 
         const currentResponse = {
           end: (message) => { throw new Error(message); },
