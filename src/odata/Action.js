@@ -222,6 +222,7 @@ export default class Action {
         } else if (!param.$Nullable && (!req.body || !req.body[param.$Name])) {
           const error = new Error(`Obligatory parameter '${param.$Name}' not given`);
 
+          error.target = param.$Name;
           error.status = 400;
 
           throw error;
