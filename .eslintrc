@@ -21,6 +21,7 @@
       "warn",
       2
     ],
+    "keyword-spacing": "warn",
     "linebreak-style": [
       "warn",
       "unix"

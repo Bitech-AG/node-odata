@@ -10,6 +10,7 @@ export default class Action {
     this.fn = async (req, res, next) => {
       try {
         res.$odata.status = 200;
+        req.$odata.operationType = 'action';
 
         const result = fn(req, res, next);
 
@@ -222,7 +223,7 @@ export default class Action {
         } else if (!param.$Nullable && (!req.body || !req.body[param.$Name])) {
           const error = new Error(`Obligatory parameter '${param.$Name}' not given`);
 
-          error.target = param.$Name;
+          error.target = `$Parameter/${param.$Name}`;
           error.status = 400;
 
           throw error;

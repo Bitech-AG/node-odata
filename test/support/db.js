@@ -19,7 +19,7 @@ export async function connect(server) {
     await mongoose.connect(process.env.DATABASE || conn);
     init(server);
     
-  } catch(err) {
+  } catch (err) {
     console.error(err.message);
     console.error('Failed to connect to database on startup.');
     process.exit();

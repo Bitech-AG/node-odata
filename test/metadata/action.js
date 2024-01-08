@@ -202,7 +202,7 @@ describe('metadata.action', () => {
 
       throw new Error('Invalid name should not accepted');
       
-    } catch(error) {
+    } catch (error) {
       error.message.should.equal('Invalid simple identifier \'/login\'');
     }
   });

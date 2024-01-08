@@ -10,7 +10,7 @@ server.addBefore(async (req, res, next) => {
 
     next();
 
-  } catch(err) {
+  } catch (err) {
     console.error(err.message);
     console.error('Failed to connect to database on startup.');
     process.exit();

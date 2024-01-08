@@ -13,8 +13,15 @@ export default function(err, req, res, next) {
       };
     });
     mappedError = new Error(details[0].message);
-    mappedError.target = details[0].target;
+    
+    if (details[0].target) {
+      const target = details[0].target.replace('.', '/');
+
+      mappedError.target = req.$odata.operationType === 'action' ? `$Parameter/${target}` : target;
+    }
+
     mappedError.status = '400';
+    
     if (details.lenght > 1) {
       mappedError.details = details.slice(1);
     }

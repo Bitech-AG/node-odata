@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Mocha single Test",
+      "name": "node.odata single",
       "skipFiles": [
         "<node_internals>/**"
       ],
@@ -20,7 +20,7 @@
         "dot",
         "--timeout",
         "300000",
-        "test/**/*.js"
+        "test/**/error.js"
       ],
       "env": {
         "LOG_LEVEL": "debug"

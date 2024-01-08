@@ -114,7 +114,7 @@ export default class Singleton {
         res.$odata.status = 200;
         await handler(req, res, next);
 
-      } catch(err) { 
+      } catch (err) { 
         next(err);
       }
     };

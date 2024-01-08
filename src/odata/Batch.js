@@ -123,7 +123,7 @@ export default class Batch {
         }
       }
 
-      for(let i = 0; i < this._server.hooks.after.length; ++i) {
+      for (let i = 0; i < this._server.hooks.after.length; ++i) {
         const hook = this._server.hooks.after[i];
 
         if (hook !== error) {

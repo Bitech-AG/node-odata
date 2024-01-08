@@ -27,7 +27,7 @@ export default async (req, res, next) => {
     res.$odata.status = 204;
     next();
 
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 

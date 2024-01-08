@@ -63,7 +63,7 @@ describe('odata.actions.parameter', () => {
     res.body.should.deepEqual({
       error: {
         code: '400',
-        target: 'repeat',
+        target: '$Parameter/repeat',
         message: 'Obligatory parameter \'repeat\' not given'
       }
     });

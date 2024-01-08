@@ -34,7 +34,7 @@ export default async (req, res, next) => {
     }
     next();
 
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 

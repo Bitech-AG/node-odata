@@ -37,7 +37,7 @@ function parse($filter) {
     }
 
     // parsing rekursion
-    if(Array.isArray($filter[name])) {
+    if (Array.isArray($filter[name])) {
       $filter[name].forEach(subCondition => parse(subCondition));
     }
 
